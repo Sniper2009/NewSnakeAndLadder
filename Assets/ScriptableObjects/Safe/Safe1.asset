@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b127b36ad7cee4d78a7d32f2bfadd1c7, type: 3}
+  m_Name: Safe1
+  m_EditorClassIdentifier: 
+  safeImage: {fileID: 21300000, guid: b691c1c10c20948a08801dfaa8fbdca5, type: 3}
+  timeToOpenInSeconds: 3
+  diceInside: 1
+  safeType: 1
+  safeID: 0
