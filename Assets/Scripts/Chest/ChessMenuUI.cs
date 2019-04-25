@@ -30,7 +30,7 @@ public class ChessMenuUI : MonoBehaviour {
 		if(chest.chestState==ChestState.InOpening)
         {
             remainingTime = (chest.openOrderTimeInSystem +chest.openDuration)- System.DateTime.Now;
-        //    Debug.Log("time: " + chest.openOrderTimeInSystem+ "   " + chest.openDuration + "   " + System.DateTime.Now);
+//            Debug.Log("time: " + chest.openOrderTimeInSystem+ "   " + chest.openDuration + "   " + System.DateTime.Now);
             transform.GetChild(1).GetChild(0).GetComponent<Text>().text = remainingTime.Hours.ToString() + ":" + remainingTime.Minutes.ToString()
                  + ":" + remainingTime.Seconds.ToString();
 
