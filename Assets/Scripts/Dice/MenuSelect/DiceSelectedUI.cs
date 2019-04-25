@@ -33,7 +33,7 @@ public class DiceSelectedUI : MonoBehaviour {
         transform.GetChild(1).GetComponent<Text>().text = thisDice.currentCharge + "/"+ DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
 
         transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().localScale =
-        new Vector2((float)thisDice.amountAwarded / DiceDefaultHolder.awardForNextLevel[thisDice.level], 1);
+         new Vector2(Mathf.Min(1.0f, (float)thisDice.amountAwarded / DiceDefaultHolder.awardForNextLevel[thisDice.level]), 1);
         transform.GetChild(2).GetChild(1).GetComponent<Text>().text = thisDice.amountAwarded + "/" + DiceDefaultHolder.awardForNextLevel[thisDice.level];
     }
 

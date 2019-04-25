@@ -9,9 +9,16 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     //child0: level| chil1=> charge| child2=> awarded, child 0=> fill image , child1=> fill text
     public delegate void RetVoidArgSavedice(SaveableDice dice);
     public static event RetVoidArgSavedice OnDiceSelected;
+    public static event RetVoidArgSavedice OnDiceClicked;
     int totalAwarded;
     SaveableDice thisDice;
     public int thisDiceID;
+    public bool diceInUse = false;
+
+    
+
+    [SerializeField] GameObject diceInfo;
+    [SerializeField] GameObject diceUse;
 
     bool isDiceSelected;
 
@@ -23,8 +30,11 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     private void Start()
     {
+        DiceSlotSelect.OnStaticDiceAssigned += DiceSelected;
+        DiceSlotSelect.OnTurnBorderOff += DeselectDice;
         DiceSaver.OnDiceBrowse += AssignDice;
-        DiceSlotSelect.OnDiceDeselect += DiceDeselected;
+        DiceSlotSelect.OnDiscardDice += CheckDiceDiscard;
+        OnDiceClicked += CheckDiceDeselect;
         isDiceSelected = false;
         GetComponent<Image>().enabled = false;
         DiceInfoUpdate.OnDiceAdded += AssignDice;
@@ -33,8 +43,11 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     void AssignDice(SaveableDice dice)
     {
+       
         if (dice.diceID == thisDiceID)
         {
+
+            //  Debug.Log("assiii:  " + dice.diceID + "   " + thisDiceID);
             thisDice = dice;
             for (int i = 0; i < childNum; i++)
             {
@@ -54,32 +67,76 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
         transform.GetChild(1).GetComponent<Text>().text = thisDice.currentCharge + "/"+DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
 
         transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().localScale = 
-        new Vector2((float)thisDice.amountAwarded / DiceDefaultHolder.awardForNextLevel[thisDice.level], 1);
+        new Vector2(Mathf.Min(1,(float)thisDice.amountAwarded / DiceDefaultHolder.awardForNextLevel[thisDice.level]), 1);
         transform.GetChild(2).GetChild(1).GetComponent<Text>().text = thisDice.amountAwarded + "/" + DiceDefaultHolder.awardForNextLevel[thisDice.level];
     }
 
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (isDiceSelected == false)
+        if (diceInUse == false)
         {
-            OnDiceSelected(thisDice);
+            OnDiceClicked(thisDice);
+
+            diceUse.SetActive(true);
+            diceInfo.SetActive(true);
+
             isDiceSelected = true;
+        }
+
+    }
+
+    void DiceSelected(SaveableDice dice)
+    {
+        if(dice.diceID==thisDiceID)
+            diceInUse = true;
+    }
+
+    public void OnUseClicked()
+    {
+
+        OnDiceSelected(thisDice);
+    }
+
+    void CheckDiceDiscard(SaveableDice selDice)
+    {
+        if(thisDiceID==selDice.diceID)
+        {
+            diceInUse = false;
         }
     }
 
-    void DiceDeselected(int id)
+    void DeselectDice(SaveableDice dice)
     {
-        if (thisDiceID == id)
-            isDiceSelected = false;
+        diceUse.SetActive(false);
+        diceInfo.SetActive(false);
     }
+
+
+    void CheckDiceDeselect(SaveableDice newDice)
+    {
+        if (thisDice == null)
+            return;
+//        Debug.Log("new: " + newDice + "   " + thisDice);
+        if(newDice.diceID!=thisDice.diceID)
+        {
+            diceUse.SetActive(false);
+            diceInfo.SetActive(false);
+            isDiceSelected = false;
+        }
+    }
+
+
 
     private void OnDestroy()
     {
+        DiceSlotSelect.OnStaticDiceAssigned -= DiceSelected;
+        DiceSlotSelect.OnTurnBorderOff -= DeselectDice;
         DiceInfoUpdate.OnDiceAdded -= AssignDice;
         GetComponent<DiceLevelup>().OnDiceUpdate -= AssignDice;
-        DiceSlotSelect.OnDiceDeselect -= DiceDeselected;
+        DiceSlotSelect.OnDiscardDice -= CheckDiceDiscard;
         DiceSaver.OnDiceBrowse -= AssignDice;
+        OnDiceClicked -= CheckDiceDeselect;
     }
 
    
