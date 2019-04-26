@@ -423,6 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   thisDiceID: 1
+  diceInUse: 0
   diceInfo: {fileID: 1027571694067704}
   diceUse: {fileID: 1016013812222802}
 --- !u!114 &114572162193545098
@@ -748,8 +749,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114500662634272768}
-        m_MethodName: OnInfoClicked
+      - m_Target: {fileID: 0}
+        m_MethodName: OnActicateInfo
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

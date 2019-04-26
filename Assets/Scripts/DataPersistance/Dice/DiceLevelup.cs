@@ -11,14 +11,18 @@ public class DiceLevelup : MonoBehaviour {
 
     public void OnLevelUp()
     {
+        
         dice = GetComponent<DiceUIMenu>().GetDice();
-        if (dice.amountAwarded>=DiceDefaultHolder.awardForNextLevel[dice.level])
+        if (dice.level < DiceDefaultHolder.maxChargePErLevelStatic.Count)
         {
-            dice.amountAwarded -= DiceDefaultHolder.awardForNextLevel[dice.level];
-            dice.level++;
+            if (dice.amountAwarded >= DiceDefaultHolder.awardForNextLevel[dice.level])
+            {
+                dice.amountAwarded -= DiceDefaultHolder.awardForNextLevel[dice.level];
+                dice.level++;
 
-            OnDiceUpdate(dice);
-            OnADiceUpdate(dice);
+                OnDiceUpdate(dice);
+                OnADiceUpdate(dice);
+            }
         }
     }
 }

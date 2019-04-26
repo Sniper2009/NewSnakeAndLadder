@@ -11,7 +11,7 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
     [SerializeField] Text currentPlayerCharge;
     [SerializeField] Image diceImage;
     [SerializeField] int slotID;
-
+    bool hasDice = false;
     
     string diceInSlot = "diceSelect_";
     int diceID;
@@ -26,8 +26,18 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
         DiceSelector.OnDiceSelected += DiceBoundaryCheck;
         PlayerDiceHolding.OnDiceChargeUpdate += UpdateChargeText;
         diceID = PlayerPrefs.GetInt(diceInSlot);
-        UpdateChargeText();
-        diceImage.sprite = DiceImageReader.diceImages[diceID];
+        if (diceID == 0)
+        {
+            diceImage.sprite = null;
+            hasDice = false;
+        }
+        else
+        {
+            hasDice = true;
+            UpdateChargeText();
+            diceImage.sprite = DiceImageReader.diceImages[diceID];
+        }
+       
        
     }
 
@@ -69,6 +79,8 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
     }
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (hasDice == false)
+            return;
         if (DiceSaver.instance.GetDices(diceID).currentCharge > 0)
         {
             Border.color = Color.green;

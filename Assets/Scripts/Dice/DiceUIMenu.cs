@@ -10,6 +10,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     public delegate void RetVoidArgSavedice(SaveableDice dice);
     public static event RetVoidArgSavedice OnDiceSelected;
     public static event RetVoidArgSavedice OnDiceClicked;
+    public event RetVoidArgSavedice OnThisDiceAssigned;
     int totalAwarded;
     SaveableDice thisDice;
     public int thisDiceID;
@@ -34,11 +35,31 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
         DiceSlotSelect.OnTurnBorderOff += DeselectDice;
         DiceSaver.OnDiceBrowse += AssignDice;
         DiceSlotSelect.OnDiscardDice += CheckDiceDiscard;
+        DiceSelectedUI.OnSlotDiceClicked += SelectedDicePanelClicked;
         OnDiceClicked += CheckDiceDeselect;
+        DiceInfoSelect.OnUpdateDice += DiceUpdate;
         isDiceSelected = false;
         GetComponent<Image>().enabled = false;
         DiceInfoUpdate.OnDiceAdded += AssignDice;
         GetComponent<DiceLevelup>().OnDiceUpdate += AssignDice;
+    }
+
+
+    void SelectedDicePanelClicked(int dummy)
+    {
+        diceUse.SetActive(false);
+        diceInfo.SetActive(false);
+    }
+
+    void DiceUpdate(SaveableDice newDice)
+    {
+    
+        if (thisDiceID == newDice.diceID)
+        {
+            Debug.Log("in edit");
+            thisDice = newDice;
+            DisplayDiceInfo();
+        }
     }
 
     void AssignDice(SaveableDice dice)
@@ -54,6 +75,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
                 transform.GetChild(i).gameObject.SetActive(true);
             }
             DisplayDiceInfo();
+        
         }
     }
 
@@ -137,6 +159,8 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
         DiceSlotSelect.OnDiscardDice -= CheckDiceDiscard;
         DiceSaver.OnDiceBrowse -= AssignDice;
         OnDiceClicked -= CheckDiceDeselect;
+        DiceInfoSelect.OnUpdateDice -= DiceUpdate;
+        DiceSelectedUI.OnSlotDiceClicked -= SelectedDicePanelClicked;
     }
 
    

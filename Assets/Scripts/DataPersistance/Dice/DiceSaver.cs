@@ -22,6 +22,7 @@ public class DiceSaver : SaveableItem {
         //{
         //    Destroy(this.gameObject);
         //}
+        DiceInfoSelect.OnUpdateDice += UpdateDice;
         PlayerDiceHolding.OnDecreaseCharge += UpdateDice;
         DiceInfoUpdate.OnDiceAdded += AddDice;
         DiceAwardReceive.OnDiceAdd += AddDice;
@@ -64,13 +65,13 @@ public class DiceSaver : SaveableItem {
 
     void UpdateDice(SaveableDice newDice)
     {
-        Debug.Log("updated:  " + newDice.diceID + "   " + newDice.currentCharge);
+//        Debug.Log("updated:  " + newDice.diceID + "   " + newDice.currentCharge);
       //  userDices = LoadItems().userDices;
 
         foreach (var dice in userDices)
       
         {
-              Debug.Log("in id:  " +dice.diceID+"   "+dice.currentCharge);
+         //     Debug.Log("in id:  " +dice.diceID+"   "+dice.currentCharge);
             if (dice.diceID==newDice.diceID)
             {
                 dice.currentCharge = newDice.currentCharge;
@@ -143,7 +144,7 @@ public class DiceSaver : SaveableItem {
 
     }
 
-
+  
 
 
     private void OnDestroy()
@@ -153,6 +154,7 @@ public class DiceSaver : SaveableItem {
         DiceAwardReceive.OnDiceAdd -= AddDice;
         DiceAwardReceive.OnDiceUpdate -= UpdateDice;
         DiceLevelup.OnADiceUpdate -= UpdateDice;
+        DiceInfoSelect.OnUpdateDice -= UpdateDice;
         //  DiceInfoUpdate.OnStartBrowse -= BrowseDice;
     }
 }

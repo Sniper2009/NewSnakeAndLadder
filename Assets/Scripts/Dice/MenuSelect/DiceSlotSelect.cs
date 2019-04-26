@@ -16,6 +16,7 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
     public delegate void RetVoidArgInt(int slot);
     public static event RetVoidArgInt OnSlotSelected;
     public static event RetVoidArgInt OnDiceDeselect;
+    public event RetVoidArgInt OnDisplayInfoButton;
 
     public delegate void RetVoidArgSavedice(SaveableDice dice);
     public static event RetVoidArgSavedice OnDiscardDice;
@@ -27,7 +28,7 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
     [SerializeField] Sprite emptySlot;
     [SerializeField] Sprite withDiceSlot;
 
-    [SerializeField] int slotID;
+    public int slotID;
 
     [SerializeField]Image borderImage;
 
@@ -44,6 +45,7 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
         DiceUIMenu.OnDiceSelected += OnDiceSelected;
         DiceUIMenu.OnDiceClicked += TurnSlotOff;
 
+
         PlayerPrefs.SetInt("diceSelect_" + slotID, 0);
 
 
@@ -53,6 +55,7 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
         backgroundImage = GetComponent<Image>();
         borderImage.enabled = false;
         backgroundImage.sprite = emptySlot;
+
     }
 
  
@@ -96,7 +99,10 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
     {
         Debug.Log("pointer down  "+canTakeDice);
         if (canTakeDice == false)
+        {
+            OnDisplayInfoButton(0);
             return;
+        }
        
         //OnSlotSelected(slotID);
         if (currentDiceInMenuSelected != null)
