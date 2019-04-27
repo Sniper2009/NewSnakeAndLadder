@@ -11,6 +11,8 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     public static event RetVoidArgSavedice OnDiceSelected;
     public static event RetVoidArgSavedice OnDiceClicked;
     public event RetVoidArgSavedice OnThisDiceAssigned;
+    [SerializeField] DiceDesignApply diceUIPrefab;
+   // [SerializeField]
     int totalAwarded;
     SaveableDice thisDice;
     public int thisDiceID;
@@ -20,6 +22,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     [SerializeField] GameObject diceInfo;
     [SerializeField] GameObject diceUse;
+    [SerializeField] GameObject diceDisplayDesign;
 
     bool isDiceSelected;
 
@@ -82,8 +85,10 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     void DisplayDiceInfo()
     {
+        diceDisplayDesign.SetActive(true);
         GetComponent<Image>().enabled = true;
-        GetComponent<Image>().sprite = DiceImageReader.diceImages[thisDiceID];
+        diceUIPrefab.ChangeID(thisDice.diceID);
+      //  GetComponent<Image>().sprite = DiceImageReader.diceImages[thisDiceID];
 
         transform.GetChild(0).GetComponent<Text>().text = "level " + (thisDice.level+1);
         transform.GetChild(1).GetComponent<Text>().text = thisDice.currentCharge + "/"+DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];

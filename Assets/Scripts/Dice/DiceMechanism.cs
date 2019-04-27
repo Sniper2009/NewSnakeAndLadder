@@ -13,9 +13,12 @@ public class DiceMechanism : MonoBehaviour {
     public static event RetBoolArgInt OnCheckDiceCharge;
 
     [SerializeField] DiceCollection diceCollection;
+    [SerializeField] DiceDesignCollection diceDesignCollection;
     [SerializeField] Image resultOutput;
+    [SerializeField] Image diceBackGround;
     int currentDiceID;
-    [SerializeField]int[] diceNumbers= { 3};
+    int prevResult = 0;
+    List<int> diceNumbers;
 	// Use this for initialization
 	void Start () {
     
@@ -27,8 +30,9 @@ public class DiceMechanism : MonoBehaviour {
 
     void ChangeDice(int ID)
     {
-        diceNumbers = diceCollection.dices[ID].diceNumbers;
-        resultOutput.sprite = DiceImageReader.diceImages[ID];
+        diceNumbers = diceDesignCollection.diceFullDesigns[ID].nums;//diceCollection.dices[ID].diceNumbers;
+        diceBackGround.color = diceDesignCollection.diceFullDesigns[ID].color;
+        resultOutput.sprite = diceDesignCollection.resultSprite[prevResult];
         currentDiceID = ID;
     }
 
@@ -40,9 +44,10 @@ public class DiceMechanism : MonoBehaviour {
             ChangeDice(0);
             return;
         }
-        int resultIndex = Random.Range(0, diceNumbers.Length);
+        int resultIndex = Random.Range(0, diceNumbers.Count);
         int result = diceNumbers[resultIndex];
-       // resultOutput.sprite = diceCollection.dices[currentDiceID].diceImages[resultIndex];
+        diceBackGround.color= diceDesignCollection.diceFullDesigns[currentDiceID].color;
+        resultOutput.sprite = diceDesignCollection.resultSprite[result];
         OnDiceRolled(result);
         if(OnDiceNumberCharged!=null)
         OnDiceNumberCharged(currentDiceID);

@@ -6,7 +6,7 @@ using System.Linq;
 public class LandPointShow : MonoBehaviour {
 
     [SerializeField] Transform board;
-    [SerializeField] DiceCollection diceCollection;
+    [SerializeField] DiceDesignCollection diceCollection;
     //[SerializeField] GameObject pointerObject;
    [SerializeField] List<GameObject> instantiatedPoints;
     int tileToShow = 8;
@@ -38,7 +38,7 @@ public class LandPointShow : MonoBehaviour {
         DiceSelect.OnDiceNumbers += DisplayPointers;
         locationCurrentTile = GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;
         if(GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>()!=null)
-        DisplayPointers(diceCollection.dices[GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].diceNumbers);
+        DisplayPointers(diceCollection.diceFullDesigns[GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
     }
 
 
@@ -47,12 +47,12 @@ public class LandPointShow : MonoBehaviour {
         if (state == GameState.WaitingForDice)
         {
             if(GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>() != null)
-            DisplayPointers(diceCollection.dices[ GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].diceNumbers);
+            DisplayPointers(diceCollection.diceFullDesigns[ GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
         }
     }
 
 
-    void DisplayPointers(int[]diceNumbers)
+    void DisplayPointers(List<int>diceNumbers)
     {
         List<int> diceNums = diceNumbers.OfType<int>().ToList();
         locationCurrentTile = GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;

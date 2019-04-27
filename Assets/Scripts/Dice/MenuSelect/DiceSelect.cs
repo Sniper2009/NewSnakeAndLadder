@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class DiceSelect : MonoBehaviour {
 
-    public delegate void RetVoidArgIntArray(int[] moves);
+    public delegate void RetVoidArgIntArray(List<int> moves);
     public static event RetVoidArgIntArray OnDiceNumbers;
 
     public static int playerDice = 0;
@@ -13,7 +13,7 @@ public class DiceSelect : MonoBehaviour {
     public static int currentDiceID;
     [SerializeField] GameObject diceSelectPanel;
     [SerializeField] Image diceSceneImage;
-    [SerializeField] DiceCollection diceCollection;
+    [SerializeField] DiceDesignCollection diceCollection;
     public delegate void RetVoidArgInt(int num);
     public static event RetVoidArgInt OnDiceUpdate;
 	// Use this for initialization
@@ -38,9 +38,9 @@ public class DiceSelect : MonoBehaviour {
             currentDiceID = 0;
             playerDice = currentDiceID;
             diceChangeError.text = "";
-            diceSceneImage.sprite = diceCollection.dices[currentDiceID].diceImages[0];
+           // diceSceneImage.sprite = diceCollection.diceFullDesigns[currentDiceID].diceImages[0];
             OnDiceUpdate(currentDiceID);
-            OnDiceNumbers(diceCollection.dices[currentDiceID].diceNumbers);
+            OnDiceNumbers(diceCollection.diceFullDesigns[currentDiceID].nums);
             diceSelectPanel.SetActive(false);
         }
     }
@@ -59,9 +59,9 @@ public class DiceSelect : MonoBehaviour {
         {
             playerDice = currentDiceID;
             diceChangeError.text = "";
-            diceSceneImage.sprite = diceCollection.dices[currentDiceID].diceImages[0];
+          //  diceSceneImage.sprite = diceCollection.dices[currentDiceID].diceImages[0];
             OnDiceUpdate(currentDiceID);
-            OnDiceNumbers(diceCollection.dices[currentDiceID].diceNumbers);
+            OnDiceNumbers(diceCollection.diceFullDesigns[currentDiceID].nums);
             diceSelectPanel.SetActive(false);
         }
     }

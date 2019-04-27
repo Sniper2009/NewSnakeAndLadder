@@ -18,6 +18,9 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
     public delegate void RetVoidArgVoid();
     public static event RetVoidArgVoid OnChestReady;
 
+    public delegate void RetVoidArgInt(int i);
+    public static event RetVoidArgInt OnChargeGem;
+
     [SerializeField] ChestCollection chestCollection;
     int chestID;
     bool chestReady = false;
@@ -82,9 +85,13 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
 
     public void OnBuyWithGems()
     {
-        thisChest.chestState = ChestState.Ready;
-        chestState = ChestState.Ready;
-        OnChestBuyGems(thisChest);
+        if (PlayerPrefs.GetInt("Gem") > 100)//TODO change fixed
+        {
+            OnChargeGem(-100);
+            thisChest.chestState = ChestState.Ready;
+            chestState = ChestState.Ready;
+            OnChestBuyGems(thisChest);
+        }
     }
 
 

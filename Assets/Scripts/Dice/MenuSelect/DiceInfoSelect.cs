@@ -8,10 +8,17 @@ public class DiceInfoSelect : MonoBehaviour {
     public delegate void RetVoidArgSaveDice(SaveableDice dice);
     public static event RetVoidArgSaveDice OnUpdateDice;
 
+    public delegate void RetVoidArgInt(int i);
+    public static event RetVoidArgInt OnCoinCharge;
+
      GameObject userInfoPanel;
     [SerializeField] Text chargeAmount;
     [SerializeField] Image diceSprite;
+    [SerializeField] Text diceNameText;
+    [SerializeField] Text diceStoryText;
     [SerializeField] DiceCollection diceCollection;
+
+    [SerializeField] DiceDesignApply designApply;
    // [SerializeField] Text 
     SaveableDice thisDice;
 
@@ -31,7 +38,10 @@ public class DiceInfoSelect : MonoBehaviour {
     public void OnActicateInfo()
     {
         userInfoPanel.SetActive(true);
-        diceSprite.sprite = DiceImageReader.diceImages[thisDice.diceID];
+        designApply.ChangeID(thisDice.diceID);
+        diceNameText.text = designApply.diceFullDesign.diceName;
+        diceStoryText.text = designApply.diceFullDesign.diceStory;
+        //diceSprite.sprite = DiceImageReader.diceImages[thisDice.diceID];
     }
 
     public void OnExit()
@@ -47,9 +57,12 @@ public class DiceInfoSelect : MonoBehaviour {
 
     public void DicePutForCharge()
     {
-        //TODO Check coins
-        thisDice.currentCharge = DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
-        OnUpdateDice(thisDice);
+        if (PlayerPrefs.GetInt("Coins") > 100)//TODO replace fix
+        {
+            OnCoinCharge(-100);
+            thisDice.currentCharge = DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
+            OnUpdateDice(thisDice);
+        }
 
     }
 

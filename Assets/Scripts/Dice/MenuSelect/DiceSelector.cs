@@ -10,6 +10,8 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
 
     [SerializeField] Text currentPlayerCharge;
     [SerializeField] Image diceImage;
+    [SerializeField] DiceDesignApply diceDesignApply;
+    [SerializeField] GameObject diceDesignObject;
     [SerializeField] int slotID;
     bool hasDice = false;
     
@@ -33,9 +35,11 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
         }
         else
         {
+            diceDesignObject.SetActive(true);
+            diceDesignApply.ChangeID(diceID);
             hasDice = true;
             UpdateChargeText();
-            diceImage.sprite = DiceImageReader.diceImages[diceID];
+           // diceImage.sprite = DiceImageReader.diceImages[diceID];
         }
        
        
@@ -46,7 +50,7 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
        
        
         if(Border==null)
-        Border = transform.GetChild(0).GetComponent<Image>();
+        Border = transform.GetChild(1).GetComponent<Image>();
 
     }
 

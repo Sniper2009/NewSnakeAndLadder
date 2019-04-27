@@ -7,6 +7,7 @@ public class Prize  {
 
     public int prizeType;
     public int coinAmount;
+    public int gemAmount;
     public int diceID;
     public int diceAmount;
 }

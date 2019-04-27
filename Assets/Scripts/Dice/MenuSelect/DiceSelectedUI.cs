@@ -11,8 +11,10 @@ public class DiceSelectedUI : MonoBehaviour {
     public static event RetVoidArgInt OnSlotDiceClicked;
 
     bool enableInfo = false;
+    [SerializeField] DiceDesignApply diceDesignApply;
     [SerializeField] DiceSlotSelect mySlot;
     [SerializeField] GameObject infoButton;
+    [SerializeField] GameObject designApplyObject;
     SaveableDice thisDice;
     int childnum = 3;
     int slotID;
@@ -62,14 +64,16 @@ public class DiceSelectedUI : MonoBehaviour {
         {
             transform.GetChild(i).gameObject.SetActive(true);
         }
-        GetComponent<Image>().enabled = true;
+      //  GetComponent<Image>().enabled = true;
         DisplayDiceInfo();
     }
 
     void DisplayDiceInfo()
     {
-        GetComponent<Image>().enabled = true;
-        GetComponent<Image>().sprite = DiceImageReader.diceImages[thisDice.diceID];
+       // GetComponent<Image>().enabled = true;
+        designApplyObject.SetActive(true);
+        diceDesignApply.ChangeID(thisDice.diceID);
+        //GetComponent<Image>().sprite = DiceImageReader.diceImages[thisDice.diceID];
 
         transform.GetChild(0).GetComponent<Text>().text = "level " + (thisDice.level + 1);
         transform.GetChild(1).GetComponent<Text>().text = thisDice.currentCharge + "/"+ DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
