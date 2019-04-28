@@ -13,3 +13,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxChargePerLevel: 030000000500000007000000090000000b000000
   awardAmountForNextLevel: 0a0000001e0000003200000064000000c8000000
+  diceChargeTime:
+  - diceRareness: 0
+    diceLevel: 0
+    chargeTime:
+      seconds: 20
+      minute: 0
+      hour: 0
+      day: 0
+      month: 0
+      year: 0
+  - diceRareness: 1
+    diceLevel: 0
+    chargeTime:
+      seconds: 0
+      minute: 3
+      hour: 0
+      day: 0
+      month: 0
+      year: 0
+  - diceRareness: 2
+    diceLevel: 0
+    chargeTime:
+      seconds: 0
+      minute: 15
+      hour: 0
+      day: 0
+      month: 0
+      year: 0
+  - diceRareness: 0
+    diceLevel: 0
+    chargeTime:
+      seconds: 0
+      minute: 0
+      hour: 0
+      day: 0
+      month: 0
+      year: 0
+  - diceRareness: 0
+    diceLevel: 0
+    chargeTime:
+      seconds: 0
+      minute: 0
+      hour: 0
+      day: 0
+      month: 0
+      year: 0

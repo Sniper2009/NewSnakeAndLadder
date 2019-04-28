@@ -11,4 +11,7 @@ public class SaveableDice {
    public int currentCharge;
    public int amountAwarded;
     public int location;
+    public bool isCharging;
+
+    public DateTimeSaveable startToChargeTime;
 }

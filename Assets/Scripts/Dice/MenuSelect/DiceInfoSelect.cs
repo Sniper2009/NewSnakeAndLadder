@@ -11,6 +11,8 @@ public class DiceInfoSelect : MonoBehaviour {
     public delegate void RetVoidArgInt(int i);
     public static event RetVoidArgInt OnCoinCharge;
 
+    bool anotherCharging;
+
      GameObject userInfoPanel;
     [SerializeField] DiceRarityData diceRarityData;
     [SerializeField] DiceClassNames diceClassNames;
@@ -27,13 +29,16 @@ public class DiceInfoSelect : MonoBehaviour {
     [SerializeField] Text diceRarityText;
 
     [SerializeField] DiceDesignApply designApply;
+
+    [SerializeField] GameObject chargeButton;
    // [SerializeField] Text 
     SaveableDice thisDice;
 
-    private void Start()
+    private void Awake()
     {
         userInfoPanel = transform.GetChild(0).gameObject;
         userInfoPanel.SetActive(false);
+        DiceUIMenu.OnDiceChargeStateChanged += ChangeCharging;
         DiceUIMenu.OnDiceClicked += GetDice;
         DiceSelectedUI.OnDiceInfoClicked += GetDice;
     }
@@ -45,6 +50,14 @@ public class DiceInfoSelect : MonoBehaviour {
     }
     public void OnActicateInfo()
     {
+        if (anotherCharging)
+        {
+            chargeButton.SetActive(false);
+        }
+        else
+        {
+            chargeButton.SetActive(true);
+        }
         userInfoPanel.SetActive(true);
         designApply.ChangeID(thisDice.diceID);
         diceNameText.text = designApply.diceFullDesign.diceName;
@@ -57,6 +70,9 @@ public class DiceInfoSelect : MonoBehaviour {
         //diceSprite.sprite = DiceImageReader.diceImages[thisDice.diceID];
     }
 
+
+    
+
     public void OnExit()
     {
         userInfoPanel.SetActive(false);
@@ -68,12 +84,27 @@ public class DiceInfoSelect : MonoBehaviour {
         userInfoPanel.SetActive(false);
     }
 
+    void ChangeCharging(SaveableDice dice)
+    {
+        if (dice.isCharging)
+            anotherCharging = true;
+        else
+            anotherCharging = false;
+    }
+
     public void DicePutForCharge()
     {
-        if (PlayerPrefs.GetInt("Coins") > 100)//TODO replace fix
+       
+        Debug.Log("charge clicked: " + PlayerPrefs.GetInt("Coin"));
+        if (PlayerPrefs.GetInt("Coin") > 100)//TODO replace fix
         {
+            anotherCharging = true;
+            Debug.Log("in charge");
             OnCoinCharge(-100);
-            thisDice.currentCharge = DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
+         
+            thisDice.isCharging = true;
+            System.DateTime current = System.DateTime.Now;
+            thisDice.startToChargeTime = new DateTimeSaveable(current.Year, current.Month, current.Day, current.Hour, current.Minute, current.Second);
             OnUpdateDice(thisDice);
         }
 
@@ -90,6 +121,7 @@ public class DiceInfoSelect : MonoBehaviour {
 
     private void OnDestroy()
     {
+        DiceUIMenu.OnDiceChargeStateChanged -= ChangeCharging;
         DiceUIMenu.OnDiceClicked -= GetDice;
         DiceSelectedUI.OnDiceInfoClicked -= GetDice;
     }

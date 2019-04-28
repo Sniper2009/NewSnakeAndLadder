@@ -10,19 +10,29 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     public delegate void RetVoidArgSavedice(SaveableDice dice);
     public static event RetVoidArgSavedice OnDiceSelected;
     public static event RetVoidArgSavedice OnDiceClicked;
+    public static event RetVoidArgSavedice OnUpdateDice;
+    public static event RetVoidArgSavedice OnDiceChargeStateChanged;
     public event RetVoidArgSavedice OnThisDiceAssigned;
     [SerializeField] DiceDesignApply diceUIPrefab;
+    [SerializeField] Text diceChargingText;
+    [SerializeField] Image chargeCoverImage;
+    Color chargingColor;
+    Color chargeDoneColor;
+    [SerializeField] DiceDesignCollection diceDesignCollection;
    // [SerializeField]
     int totalAwarded;
     SaveableDice thisDice;
     public int thisDiceID;
     public bool diceInUse = false;
 
-    
+    System.TimeSpan remainingTime;
+    System.DateTime startChargeTime;
+    System.TimeSpan chargeDuration;
 
     [SerializeField] GameObject diceInfo;
     [SerializeField] GameObject diceUse;
     [SerializeField] GameObject diceDisplayDesign;
+    [SerializeField] GameObject isChargingObject;
 
     bool isDiceSelected;
 
@@ -34,6 +44,10 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     private void Start()
     {
+        chargingColor = Color.white;
+        chargingColor.a = 0.7f;
+        chargeDoneColor = Color.white;
+        chargeDoneColor.a = 0;
         DiceSlotSelect.OnStaticDiceAssigned += DiceSelected;
         DiceSlotSelect.OnTurnBorderOff += DeselectDice;
         DiceSaver.OnDiceBrowse += AssignDice;
@@ -67,7 +81,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     void AssignDice(SaveableDice dice)
     {
-       
+        Debug.Log("new dice:  " + dice.diceID + "    " + thisDiceID);
         if (dice.diceID == thisDiceID)
         {
 
@@ -78,6 +92,8 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
                 transform.GetChild(i).gameObject.SetActive(true);
             }
             DisplayDiceInfo();
+            if (thisDice.isCharging)
+                OnDiceChargeStateChanged(thisDice);
         
         }
     }
@@ -85,6 +101,27 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     void DisplayDiceInfo()
     {
+        if (thisDice.isCharging)
+        {
+            isChargingObject.SetActive(true);
+            startChargeTime = new System.DateTime(thisDice.startToChargeTime.year, thisDice.startToChargeTime.month, thisDice.startToChargeTime.day,
+                thisDice.startToChargeTime.hour, thisDice.startToChargeTime.minute, thisDice.startToChargeTime.seconds);
+            diceChargingText.enabled = true;
+            chargeCoverImage.color = chargingColor;
+            foreach (var item in DiceDefaultHolder.diceChargeTimeStatic)
+            {
+                if(item.diceRareness==diceDesignCollection.diceFullDesigns[thisDice.diceID].diceRareness && item.diceLevel==thisDice.level)
+                {
+                    chargeDuration = new System.TimeSpan(item.chargeTime.hour, item.chargeTime.minute, item.chargeTime.seconds);
+                    break;
+                }
+            }
+        }
+        else
+        {
+            diceChargingText.enabled = false;
+            chargeCoverImage.color = chargeDoneColor;
+        }
         diceDisplayDesign.SetActive(true);
         GetComponent<Image>().enabled = true;
         diceUIPrefab.ChangeID(thisDice.diceID);
@@ -99,9 +136,38 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     }
 
 
+    void Update()
+    {
+        if (thisDice == null)
+            return;
+        if(thisDice.isCharging)
+        {
+
+            remainingTime = (startChargeTime+chargeDuration ) - System.DateTime.Now;
+//                        Debug.Log("time: " + startChargeTime+ "   " + chargeDuration + "   " + System.DateTime.Now);
+            diceChargingText.text = remainingTime.Hours.ToString() + ":" + remainingTime.Minutes.ToString()
+                 + ":" + remainingTime.Seconds.ToString();
+
+            if (remainingTime.Hours <= 0 && remainingTime.Minutes <= 0 && remainingTime.Seconds <= 0)
+            {
+                Debug.Log("is ready");
+                thisDice.isCharging = false;
+                thisDice.currentCharge = DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
+                diceChargingText.enabled = false;
+                chargeCoverImage.color = chargeDoneColor;
+                OnUpdateDice(thisDice);
+                isChargingObject.SetActive(false);
+                OnDiceChargeStateChanged(thisDice);
+
+
+            }
+        }
+    }
+
+
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (diceInUse == false)
+        if (diceInUse == false && thisDice.isCharging==false)
         {
             OnDiceClicked(thisDice);
 
@@ -157,6 +223,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     private void OnDestroy()
     {
+      
         DiceSlotSelect.OnStaticDiceAssigned -= DiceSelected;
         DiceSlotSelect.OnTurnBorderOff -= DeselectDice;
         DiceInfoUpdate.OnDiceAdded -= AssignDice;

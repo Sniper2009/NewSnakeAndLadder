@@ -28,6 +28,7 @@ public class DiceSaver : SaveableItem {
         DiceAwardReceive.OnDiceAdd += AddDice;
         DiceAwardReceive.OnDiceUpdate += UpdateDice;
         DiceLevelup.OnADiceUpdate += UpdateDice;
+        DiceUIMenu.OnUpdateDice += UpdateDice;
        // DiceInfoUpdate.OnStartBrowse += BrowseDice;
        // DontDestroyOnLoad(gameObject);
         instance = this;
@@ -50,7 +51,7 @@ public class DiceSaver : SaveableItem {
     public override void SaveItems(SaveableItem itemsToSave)
     {
         userDices = ((DiceSaver)itemsToSave).userDices;
-        Debug.Log("iiii: " + userDices.Count);
+//        Debug.Log("iiii: " + userDices.Count);
         SaveLoadManager.instance.SaveItems(saveFolder, saveItemFolder, filePath, this);
 
     }
@@ -77,6 +78,9 @@ public class DiceSaver : SaveableItem {
                 dice.currentCharge = newDice.currentCharge;
                 dice.amountAwarded = newDice.amountAwarded;
                 dice.level = newDice.level;
+                Debug.Log("dice ch: " + dice.diceID + "   " + newDice.isCharging);
+                dice.isCharging = newDice.isCharging;
+                dice.startToChargeTime = newDice.startToChargeTime;
                // Debug.Log("in change: " + dice.currentCharge);
                     break;
 
@@ -155,6 +159,7 @@ public class DiceSaver : SaveableItem {
         DiceAwardReceive.OnDiceUpdate -= UpdateDice;
         DiceLevelup.OnADiceUpdate -= UpdateDice;
         DiceInfoSelect.OnUpdateDice -= UpdateDice;
+        DiceUIMenu.OnUpdateDice -= UpdateDice;
         //  DiceInfoUpdate.OnStartBrowse -= BrowseDice;
     }
 }

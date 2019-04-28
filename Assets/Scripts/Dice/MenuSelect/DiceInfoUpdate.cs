@@ -37,6 +37,7 @@ public class DiceInfoUpdate : MonoBehaviour {
         dice.level = 0;
         dice.currentCharge = defaultHolder.maxChargePerLevel[0];
         dice.amountAwarded = 0;
+        dice.isCharging = false;
         OnDiceAdded(dice);
 
     }

@@ -7,10 +7,12 @@ public class CoinUIManage : MonoBehaviour {
 
     [SerializeField] Text coinText;
 
-    int coinamount = PlayerPrefs.GetInt("Coin");
+    int coinamount;
 
     private void Start()
     {
+        PlayerPrefs.SetInt("Coin", 20000);
+        coinamount = PlayerPrefs.GetInt("Coin");
         DiceInfoSelect.OnCoinCharge += CoinAMountChange;
         ChestMenuBehaviour.OnPrizeOpen += CheckPrize;
         coinText.text = coinamount.ToString();
