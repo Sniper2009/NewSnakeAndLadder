@@ -12,11 +12,19 @@ public class DiceInfoSelect : MonoBehaviour {
     public static event RetVoidArgInt OnCoinCharge;
 
      GameObject userInfoPanel;
+    [SerializeField] DiceRarityData diceRarityData;
+    [SerializeField] DiceClassNames diceClassNames;
     [SerializeField] Text chargeAmount;
     [SerializeField] Image diceSprite;
     [SerializeField] Text diceNameText;
     [SerializeField] Text diceStoryText;
     [SerializeField] DiceCollection diceCollection;
+
+    [SerializeField] Image diceClassImage;
+    [SerializeField] Text DiceClassText;
+
+    [SerializeField] Image diceRarityImage;
+    [SerializeField] Text diceRarityText;
 
     [SerializeField] DiceDesignApply designApply;
    // [SerializeField] Text 
@@ -41,6 +49,11 @@ public class DiceInfoSelect : MonoBehaviour {
         designApply.ChangeID(thisDice.diceID);
         diceNameText.text = designApply.diceFullDesign.diceName;
         diceStoryText.text = designApply.diceFullDesign.diceStory;
+        diceClassImage.sprite = designApply.classSprite[(int)designApply.diceFullDesign.diceClass];
+        DiceClassText.text = diceClassNames.diceClassNames[(int)designApply.diceFullDesign.diceClass];
+
+        diceRarityText.text = diceRarityData.rarityNames[(int)designApply.diceFullDesign.diceRareness];
+        diceRarityImage.sprite= diceRarityData.rarityImages[(int)designApply.diceFullDesign.diceRareness];
         //diceSprite.sprite = DiceImageReader.diceImages[thisDice.diceID];
     }
 

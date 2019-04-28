@@ -16,4 +16,4 @@ MonoBehaviour:
   diceName: test1
   diceStory: a story
   diceClass: 1
-  diceRareness: 0
+  diceRareness: 1

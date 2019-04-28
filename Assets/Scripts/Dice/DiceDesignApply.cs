@@ -32,7 +32,7 @@ public class DiceDesignApply : MonoBehaviour {
     [SerializeField] Image twoTop;
     [SerializeField] Image twoFront;
 
-    [SerializeField] List<Sprite> classSprite;
+    public List<Sprite> classSprite;
     [SerializeField] Image diceClassImage;
 
 

@@ -8,15 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 94fbb9231c59b4f8aa7f40d4bec6d7cc, type: 3}
-  m_Name: dice2
+  m_Script: {fileID: 11500000, guid: cd9de861d044a418cbc0783e2fca73e0, type: 3}
+  m_Name: DiceNames
   m_EditorClassIdentifier: 
-  diceImages:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  diceNumbers: 010000000200000004000000
-  diceID: 2
+  diceClassNames:
+  - "\u0622\u062A\u0634\u0641\u0634\u0627\u0646"
+  - "\u0634\u0628"
+  - "\u0639\u0627\u062F\u06CC"

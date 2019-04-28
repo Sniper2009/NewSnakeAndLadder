@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0.7824486, g: 0.9150943, b: 0.2719384, a: 0.8745098}
   nums: 040000000500000006000000
-  diceName: test1
-  diceStory: a story
+  diceName: "\u062A\u0627\u0633 \u0639\u0627\u062F\u06CC"
+  diceStory: "\u06AF\u0631\u0641\u062A\u0647 \u0634\u062F\u0647 \u0627\u0632"
   diceClass: 1
   diceRareness: 0
