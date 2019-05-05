@@ -42,8 +42,9 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
         return thisDice;
     }
 
-    private void Start()
+    private void Awake()
     {
+
         chargingColor = Color.white;
         chargingColor.a = 0.7f;
         chargeDoneColor = Color.white;
