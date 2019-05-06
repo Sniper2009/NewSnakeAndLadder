@@ -19,7 +19,7 @@ public class DiceSelect : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GameTurnManager.OnPlayerDiceChange += CheckPlayerDice;
-        diceSelectPanel.SetActive(false);
+      //  diceSelectPanel.SetActive(false);
         DiceSelector.OnDiceSelected += UpdateDice;
 	}
 	

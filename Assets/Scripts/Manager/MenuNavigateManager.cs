@@ -7,7 +7,7 @@ public class MenuNavigateManager : MonoBehaviour {
 
 public void OnStartGame()
     {
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(1);
     }
 
 

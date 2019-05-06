@@ -50,6 +50,7 @@ public class DiceInfoSelect : MonoBehaviour {
     }
     public void OnActicateInfo()
     {
+        Debug.Log("activate called");
         if (anotherCharging)
         {
             chargeButton.SetActive(false);
