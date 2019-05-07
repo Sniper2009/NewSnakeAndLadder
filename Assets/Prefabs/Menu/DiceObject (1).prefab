@@ -727,6 +727,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2e5bc594552844b69ef24e02e016263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelUpImage: {fileID: 114873306164516982}
+  barImage: {fileID: 114458161443888294}
+  nonUpgradeColor: {r: 0.07008721, g: 0.36971778, b: 0.990566, a: 1}
+  UpgradeColor: {r: 0.3010858, g: 0.6415094, b: 0.17853329, a: 1}
 --- !u!114 &114458161443888294
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -766,7 +770,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9433962, g: 0.91224635, b: 0.91224635, a: 1}
+  m_Color: {r: 0.990566, g: 0.97654855, b: 0.97654855, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1115,7 +1119,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1720721994427084}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 

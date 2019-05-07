@@ -14,6 +14,7 @@ public class CoinUIManage : MonoBehaviour {
        // PlayerPrefs.SetInt("Coin", 20000);
         coinamount = PlayerPrefs.GetInt("Coin");
         DiceInfoSelect.OnCoinCharge += CoinAMountChange;
+        DiceInfoUI.OnChargeCoin += CoinAMountChange;
         AwardGenerator.OnAwardReceived += CheckPrize;
         coinText.text = coinamount.ToString();
     }
@@ -42,5 +43,6 @@ public class CoinUIManage : MonoBehaviour {
     {
         DiceInfoSelect.OnCoinCharge -= CoinAMountChange;
         AwardGenerator.OnAwardReceived -= CheckPrize;
+        DiceInfoUI.OnChargeCoin -= CoinAMountChange;
     }
 }

@@ -7,6 +7,7 @@ public class DiceInfoSelect : MonoBehaviour {
 
     public delegate void RetVoidArgSaveDice(SaveableDice dice);
     public static event RetVoidArgSaveDice OnUpdateDice;
+    public static event RetVoidArgSaveDice OnAssignDice;
 
     public delegate void RetVoidArgInt(int i);
     public static event RetVoidArgInt OnCoinCharge;
@@ -36,6 +37,7 @@ public class DiceInfoSelect : MonoBehaviour {
 
     private void Awake()
     {
+        DiceInfoUI.OnButtonClicked += OnExit;
         userInfoPanel = transform.GetChild(0).gameObject;
         userInfoPanel.SetActive(false);
         DiceUIMenu.OnDiceChargeStateChanged += ChangeCharging;
@@ -50,6 +52,7 @@ public class DiceInfoSelect : MonoBehaviour {
     }
     public void OnActicateInfo()
     {
+        OnAssignDice(thisDice);
         Debug.Log("activate called");
         if (anotherCharging)
         {
@@ -59,6 +62,7 @@ public class DiceInfoSelect : MonoBehaviour {
         {
             chargeButton.SetActive(true);
         }
+
         userInfoPanel.SetActive(true);
         designApply.ChangeID(thisDice.diceID);
         diceNameText.text = designApply.diceFullDesign.diceName;
@@ -76,6 +80,7 @@ public class DiceInfoSelect : MonoBehaviour {
 
     public void OnExit()
     {
+        Debug.Log("exitttt");
         userInfoPanel.SetActive(false);
     }
 
@@ -97,33 +102,28 @@ public class DiceInfoSelect : MonoBehaviour {
     {
        
         Debug.Log("charge clicked: " + PlayerPrefs.GetInt("Coin"));
-        if (PlayerPrefs.GetInt("Coin") > 100)//TODO replace fix
+        if (PlayerPrefs.GetInt("Coin") >= DiceDefaultHolder.moneyForChargeStatic[thisDice.level])//TODO replace fix
         {
             anotherCharging = true;
             Debug.Log("in charge");
-            OnCoinCharge(-100);
+            OnCoinCharge(-DiceDefaultHolder.moneyForChargeStatic[thisDice.level]);
          
             thisDice.isCharging = true;
             System.DateTime current = System.DateTime.Now;
             thisDice.startToChargeTime = new DateTimeSaveable(current.Year, current.Month, current.Day, current.Hour, current.Minute, current.Second);
             OnUpdateDice(thisDice);
+            OnExit();
         }
 
     }
 
-    public void DiceUpdate()
-    {
-        if(thisDice.level<DiceDefaultHolder.maxChargePErLevelStatic.Count)
-        thisDice.level++;
-        Debug.Log("thisdice change: " + thisDice.diceID);
-        OnUpdateDice(thisDice);
-    }
-
+   
 
     private void OnDestroy()
     {
         DiceUIMenu.OnDiceChargeStateChanged -= ChangeCharging;
         DiceUIMenu.OnDiceClicked -= GetDice;
         DiceSelectedUI.OnDiceInfoClicked -= GetDice;
+        DiceInfoUI.OnButtonClicked -= OnExit;
     }
 }

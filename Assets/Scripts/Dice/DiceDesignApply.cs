@@ -24,7 +24,7 @@ public class DiceDesignApply : MonoBehaviour {
 
     public void ChangeID(int ID)
     {
-        Debug.Log("iiii:  " + ID);
+    
         diceFullDesign = diceDesignCollection.diceFullDesigns[ID];
         ApplyChange();
     }
@@ -35,7 +35,7 @@ public class DiceDesignApply : MonoBehaviour {
         storyText.text = diceFullDesign.diceStory;
         diceClassImage.sprite = classSprite[(int)diceFullDesign.diceClass];
         diceSprite.sprite = diceFullDesign.diceImage;
-        Debug.Log("num:  " + diceFullDesign.nums.Count);
+    
 
     }
 

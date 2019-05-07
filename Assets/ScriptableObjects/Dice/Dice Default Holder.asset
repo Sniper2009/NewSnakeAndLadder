@@ -149,3 +149,5 @@ MonoBehaviour:
       day: 0
       month: 0
       year: 0
+  moneyForUpgrade: 64000000c80000002c01000090010000f4010000
+  moneyForCharge: 96000000fa0000005e010000c201000000000000

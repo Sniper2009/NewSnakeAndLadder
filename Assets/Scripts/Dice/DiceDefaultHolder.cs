@@ -21,6 +21,12 @@ public class DiceDefaultHolder : ScriptableObject {
     public List<int> awardAmountForNextLevel;
     public List<DiceClassCharge> diceChargeTime;
 
+    public List<int> moneyForUpgrade;
+    public List<int> moneyForCharge;
+
+    public static List<int> moneyForUpgradeStatic;
+    public static List<int> moneyForChargeStatic;
+
 
     public static List<int> awardForNextLevel;
     public static List<int> maxChargePErLevelStatic;
@@ -32,6 +38,8 @@ public class DiceDefaultHolder : ScriptableObject {
         awardForNextLevel = new List<int>();
         maxChargePErLevelStatic = new List<int>();
         diceChargeTimeStatic = new List<DiceClassCharge>();
+        moneyForChargeStatic = new List<int>();
+        moneyForUpgradeStatic = new List<int>();
         int i = 0;
         foreach (var item in awardAmountForNextLevel)
         {
@@ -44,6 +52,13 @@ public class DiceDefaultHolder : ScriptableObject {
         foreach (var item in diceChargeTime)
         {
             diceChargeTimeStatic.Add(item);
+        }
+        i = 0;
+        foreach (var item in moneyForUpgrade)
+        {
+            moneyForChargeStatic.Add(moneyForCharge[i]);
+            moneyForUpgradeStatic.Add(item);
+            i++;
         }
     }
 }

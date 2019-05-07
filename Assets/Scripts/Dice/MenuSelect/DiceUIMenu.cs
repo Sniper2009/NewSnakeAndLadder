@@ -13,6 +13,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     public static event RetVoidArgSavedice OnUpdateDice;
     public static event RetVoidArgSavedice OnDiceChargeStateChanged;
     public event RetVoidArgSavedice OnThisDiceAssigned;
+  
     [SerializeField] DiceDesignApply diceUIPrefab;
     [SerializeField] Text diceChargingText;
     [SerializeField] Image chargeCoverImage;
@@ -57,6 +58,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
         DiceSelectedUI.OnSlotDiceClicked += SelectedDicePanelClicked;
         OnDiceClicked += CheckDiceDeselect;
         DiceInfoSelect.OnUpdateDice += DiceUpdate;
+        DiceInfoUI.OnDiceUpgrade += DiceUpdate;
         isDiceSelected = false;
         GetComponent<Image>().enabled = false;
         DiceInfoUpdate.OnDiceAdded += AssignDice;
@@ -78,6 +80,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
             Debug.Log("in edit");
             thisDice = newDice;
             DisplayDiceInfo();
+            OnThisDiceAssigned(thisDice);
         }
     }
 
@@ -89,6 +92,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
             //  Debug.Log("assiii:  " + dice.diceID + "   " + thisDiceID);
             thisDice = dice;
+            OnThisDiceAssigned(thisDice);
             for (int i = 0; i < childNum; i++)
             {
                 transform.GetChild(i).gameObject.SetActive(true);
@@ -240,6 +244,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
         OnDiceClicked -= CheckDiceDeselect;
         DiceInfoSelect.OnUpdateDice -= DiceUpdate;
         DiceSelectedUI.OnSlotDiceClicked -= SelectedDicePanelClicked;
+        DiceInfoUI.OnDiceUpgrade -= DiceUpdate;
     }
 
    
