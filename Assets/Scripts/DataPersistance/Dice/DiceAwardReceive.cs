@@ -16,15 +16,17 @@ public class DiceAwardReceive : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         dices = diceSaver.GetAllDices();
-        ChestMenuBehaviour.OnPrizeOpen += PrizeManage;
+        AwardGenerator.OnAwardReceived += PrizeManage;
 	}
 	
 
-    void PrizeManage(Prize p)
+    void PrizeManage(AwardCard card)
     {
-        if(p.prizeType==1)//dice
+        if(card.prizeID==1)//dice
         {
-            AwardDice(p.diceID, p.diceAmount);
+
+
+            AwardDice(card.diceID, card.prizeAmount);
         }
     }
 
@@ -56,6 +58,6 @@ public class DiceAwardReceive : MonoBehaviour {
 
     private void OnDestroy()
     {
-        ChestMenuBehaviour.OnPrizeOpen -= PrizeManage;
+        AwardGenerator.OnAwardReceived -= PrizeManage;
     }
 }

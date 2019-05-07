@@ -11,7 +11,7 @@ public class GemManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        ChestMenuBehaviour.OnPrizeOpen += CheckPrize;
+        AwardGenerator.OnAwardReceived += CheckPrize;
         ChestMenuBehaviour.OnChargeGem += UpdateGemAMount;
         gemAmount = PlayerPrefs.GetInt("Gem");
         gemText.text = gemAmount.ToString();
@@ -24,17 +24,17 @@ public class GemManager : MonoBehaviour {
         PlayerPrefs.SetInt("Gem", gemAmount);
     }
 
-    void CheckPrize(Prize prize)
+    void CheckPrize(AwardCard card)
     {
-        if(prize.prizeType==2)
+        if(card.prizeID==2)
         {
-            UpdateGemAMount(prize.gemAmount);
+            UpdateGemAMount(card.prizeAmount);
         }
     }
 
     private void OnDestroy()
     {
-        ChestMenuBehaviour.OnPrizeOpen -= CheckPrize;
+        AwardGenerator.OnAwardReceived -= CheckPrize;
         ChestMenuBehaviour.OnChargeGem -= UpdateGemAMount;
     }
 }

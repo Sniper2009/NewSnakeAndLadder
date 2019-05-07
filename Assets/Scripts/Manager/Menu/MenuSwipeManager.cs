@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class MenuSwipeManager : MonoBehaviour {
-
+    public delegate void RetvoidArgVoid();
+    public static event RetvoidArgVoid OnGoToDice;
 
     [SerializeField] GameObject mainMenuObject;
     [SerializeField] GameObject diceMenuObject;
@@ -20,6 +21,7 @@ public class MenuSwipeManager : MonoBehaviour {
         mainMenuObject.SetActive(false);
         diceMenuObject.SetActive(true);
         shopMenuObject.SetActive(false);
+        OnGoToDice();
     }
 
     public void GoToMaineMenu()

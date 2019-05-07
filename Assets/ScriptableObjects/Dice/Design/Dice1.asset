@@ -11,8 +11,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e9f6a89f5153418dba8e68146143735, type: 3}
   m_Name: Dice1
   m_EditorClassIdentifier: 
+  diceImage: {fileID: 21300000, guid: e4247ee918a2747deb3ad4ef146fe954, type: 3}
+  diceID: 1
   color: {r: 0.7824486, g: 0.9150943, b: 0.2719384, a: 0.8745098}
-  nums: 040000000500000006000000
+  nums: 000000000200000004000000
   diceName: "\u062A\u0627\u0633 \u0639\u0627\u062F\u06CC"
   diceStory: "\u06AF\u0631\u0641\u062A\u0647 \u0634\u062F\u0647 \u0627\u0632"
   diceClass: 1

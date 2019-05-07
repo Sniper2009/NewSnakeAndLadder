@@ -10,28 +10,7 @@ public class DiceDesignApply : MonoBehaviour {
     [SerializeField] Text nameText;
     [SerializeField] Text storyText;
 
-    [SerializeField] GameObject threeFaces;
-    [SerializeField] GameObject twoFaces;
-
-    [SerializeField] Image threeDice;
-    [SerializeField] Image twoDice;
-
-    [SerializeField] List<Sprite> threeTopSprite;
-    [SerializeField] List<Sprite> threeLeftSprite;
-    [SerializeField] List<Sprite> threeRightSprite;
-
-    [SerializeField] Image threeTop;
-    [SerializeField] Image threeLeft;
-    [SerializeField] Image threeRight;
-
-
-    [SerializeField] List<Sprite> twoTopSprite;
-    [SerializeField] List<Sprite> twoFrontSprite;
-
-
-    [SerializeField] Image twoTop;
-    [SerializeField] Image twoFront;
-
+    [SerializeField] Image diceSprite;
     public List<Sprite> classSprite;
     [SerializeField] Image diceClassImage;
 
@@ -55,37 +34,11 @@ public class DiceDesignApply : MonoBehaviour {
         nameText.text = diceFullDesign.diceName;
         storyText.text = diceFullDesign.diceStory;
         diceClassImage.sprite = classSprite[(int)diceFullDesign.diceClass];
+        diceSprite.sprite = diceFullDesign.diceImage;
         Debug.Log("num:  " + diceFullDesign.nums.Count);
-        if(diceFullDesign.nums.Count==2)
-        {
-            DesignTwoFace();
-        }
 
-
-        else
-        {
-            DesignThreeFace();
-        }
     }
 
 
-    void DesignTwoFace()
-    {
-        twoDice.color = diceFullDesign.color;
-        twoFaces.SetActive(true);
-        threeFaces.SetActive(false);
-        twoTop.sprite = twoTopSprite[diceFullDesign.nums[0]];
-        twoFront.sprite = twoTopSprite[diceFullDesign.nums[1]];
-    }
-
-
-    void DesignThreeFace()
-    {
-        threeDice.color = diceFullDesign.color;
-        threeFaces.SetActive(true);
-        twoFaces.SetActive(false);
-        threeTop.sprite = threeTopSprite[diceFullDesign.nums[0]];
-        threeLeft.sprite = threeLeftSprite[diceFullDesign.nums[1]];
-        threeRight.sprite = threeRightSprite[diceFullDesign.nums[2]];
-    }
+   
 }

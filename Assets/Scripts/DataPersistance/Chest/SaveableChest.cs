@@ -20,17 +20,19 @@ public class SaveableChest  {
     public DateTimeSaveable openOrderTimeSaveable;
     public DateTimeSaveable openDurationSaveable;
     public System.TimeSpan openDuration;
+    public ChestType chestType;
 
-    public Prize prize;
+  //  public Prize prize;
 
-    public SaveableChest(int chestID, ChestState chestState, DateTimeSaveable openOrderTimeArg, DateTimeSaveable openDurationArg, Prize prize)
+    public SaveableChest(int chestID, ChestState chestState, DateTimeSaveable openOrderTimeArg, DateTimeSaveable openDurationArg,ChestType chestType)
     {
+        this.chestType = chestType;
         this.chestID = chestID;
         this.chestState = chestState;
         openDurationSaveable = openDurationArg;
         this.openOrderTimeInSystem = new DateTime(openOrderTimeArg.year, openOrderTimeArg.month, openOrderTimeArg.day, openOrderTimeArg.hour, openOrderTimeArg.minute, openOrderTimeArg.seconds);
         this.openDurationSaveable = openDurationArg;
-        this.prize = prize;
+      //  this.prize = prize;
 
         openDuration = new TimeSpan(openDurationArg.hour,openDurationArg.minute,openDurationArg.seconds);
       
@@ -39,14 +41,15 @@ public class SaveableChest  {
       
     }
 
-    public SaveableChest(int chestID, ChestState chestState, DateTime openOrderTime, DateTimeSaveable openDurationArg, Prize prize)
+    public SaveableChest(int chestID, ChestState chestState, DateTime openOrderTime, DateTimeSaveable openDurationArg,ChestType chestType)
     {
+        this.chestType = chestType;
         this.chestID = chestID;
         this.chestState = chestState;
      
         this.openOrderTimeInSystem = openOrderTime;
         this.openDurationSaveable = openDurationArg;
-        this.prize = prize;
+       // this.prize = prize;
 
         openDuration = new TimeSpan(openDurationArg.hour, openDurationArg.minute, openDurationArg.seconds);
 

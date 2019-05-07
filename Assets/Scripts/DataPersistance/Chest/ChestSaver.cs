@@ -70,7 +70,7 @@ public class ChestSaver : SaveableItem {
     public void AddChest(SaveableChest chest)
     {
         //  (int chestID, ChestState chestState, DateTime openOrderTimeInSystem, TimeSpan openDuration, Prize prize)
-        SaveableChest newChest = new SaveableChest(chest.chestID, chest.chestState, chest.openOrderTimeInSystem, chest.openDurationSaveable, chest.prize);
+        SaveableChest newChest = new SaveableChest(chest.chestID, chest.chestState, chest.openOrderTimeInSystem, chest.openDurationSaveable,chest.chestType);
         userChests.Add(newChest);
         SaveItems(this);
     }
@@ -81,7 +81,7 @@ public class ChestSaver : SaveableItem {
         foreach (var userChest in userChests)
         {
             Debug.Log("update: " + userChest.chestID+"   "+chest.chestState+"   "+userChest.openDurationSaveable.seconds+"  "+chest.openDurationSaveable.seconds);
-            if(userChest.chestID==chest.chestID&& userChest.prize==chest.prize && userChest.openDurationSaveable==chest.openDurationSaveable)
+            if(userChest.chestID==chest.chestID&& userChest.openDurationSaveable==chest.openDurationSaveable)
             {
               
                 userChest.chestState = chest.chestState;
@@ -98,7 +98,7 @@ public class ChestSaver : SaveableItem {
         userChests = LoadItems().userChests;
         foreach (var chest in userChests)
         {
-            SaveableChest nChest = new SaveableChest(chest.chestID, chest.chestState, chest.openOrderTimeSaveable, chest.openDurationSaveable, chest.prize);
+            SaveableChest nChest = new SaveableChest(chest.chestID, chest.chestState, chest.openOrderTimeSaveable, chest.openDurationSaveable,chest.chestType);
             OnNewChest(nChest);
         }
     }
@@ -109,7 +109,7 @@ public class ChestSaver : SaveableItem {
         int index=0;
         foreach (var userChest in userChests)
         {
-            if (userChest.chestID == chest.chestID && userChest.prize == chest.prize && userChest.openDurationSaveable == chest.openDurationSaveable)
+            if (userChest.chestID == chest.chestID &&  userChest.openDurationSaveable == chest.openDurationSaveable)
             {
                 break;
             }

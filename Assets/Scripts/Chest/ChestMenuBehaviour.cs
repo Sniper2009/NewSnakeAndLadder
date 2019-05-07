@@ -11,9 +11,10 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
     public static event RetVoidArgChetSave OnChestRemove;
     public  event RetVoidArgChetSave OnChestUnlocked;
     public event RetVoidArgChetSave OnChestBuyGems;
+    public static event RetVoidArgChetSave OnPrizeOpen;
 
     public delegate void RetVoidArgPrize(Prize p);
-    public static event RetVoidArgPrize OnPrizeOpen;
+
 
     public delegate void RetVoidArgVoid();
     public static event RetVoidArgVoid OnChestReady;
@@ -21,13 +22,14 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
     public delegate void RetVoidArgInt(int i);
     public static event RetVoidArgInt OnChargeGem;
 
+
     [SerializeField] ChestCollection chestCollection;
     int chestID;
     bool chestReady = false;
     System.TimeSpan remainingTimeToOpen;
     DateTimeSaveable openDuration;
     DateTimeSaveable openOrderTime;
-    ChestState chestState;
+     ChestState chestState;
     Prize prize;
     int childNum = 3;
     SaveableChest thisChest;
@@ -44,7 +46,7 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
         chestID = saveableChest.chestID;
         if(chestReady==false)
             chestState = saveableChest.chestState;
-        prize = saveableChest.prize;
+      //  prize = saveableChest.prize;
         openDuration = saveableChest.openDurationSaveable;
         openOrderTime = saveableChest.openOrderTimeSaveable;
         Debug.Log("chest dur: " + saveableChest.openDuration);
@@ -77,7 +79,7 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
     {
         thisChest.chestState = ChestState.InOpening;
         chestState = ChestState.InOpening;
-        SaveableChest newChest = new SaveableChest(chestID, chestState, System.DateTime.Now, openDuration, prize);
+        SaveableChest newChest = new SaveableChest(chestID, chestState, System.DateTime.Now, openDuration,thisChest.chestType);
         OnChestUnlocked(newChest);
         OnChestChanged(newChest);
         OnChestAssigned(newChest);
@@ -107,7 +109,7 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
         if(chestState==ChestState.Ready)
         {
             Debug.Log("prize opened");
-            OnPrizeOpen(prize);
+            OnPrizeOpen(thisChest);
             OnChestRemove(thisChest);
             Destroy(gameObject);
         }

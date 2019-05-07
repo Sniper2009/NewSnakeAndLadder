@@ -11,10 +11,10 @@ public class CoinUIManage : MonoBehaviour {
 
     private void Start()
     {
-        PlayerPrefs.SetInt("Coin", 20000);
+       // PlayerPrefs.SetInt("Coin", 20000);
         coinamount = PlayerPrefs.GetInt("Coin");
         DiceInfoSelect.OnCoinCharge += CoinAMountChange;
-        ChestMenuBehaviour.OnPrizeOpen += CheckPrize;
+        AwardGenerator.OnAwardReceived += CheckPrize;
         coinText.text = coinamount.ToString();
     }
 
@@ -27,11 +27,11 @@ public class CoinUIManage : MonoBehaviour {
     }
 
 
-    void CheckPrize(Prize prize)
+    void CheckPrize(AwardCard card)
     {
-    if(prize.prizeType==0)
+    if(card.prizeID==0)
         {
-            CoinAMountChange(prize.coinAmount);
+            CoinAMountChange(card.prizeAmount);
         }
     }
 
@@ -41,6 +41,6 @@ public class CoinUIManage : MonoBehaviour {
     private void OnDestroy()
     {
         DiceInfoSelect.OnCoinCharge -= CoinAMountChange;
-        ChestMenuBehaviour.OnPrizeOpen -= CheckPrize;
+        AwardGenerator.OnAwardReceived -= CheckPrize;
     }
 }

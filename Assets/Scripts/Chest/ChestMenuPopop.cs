@@ -147,13 +147,16 @@ public class ChestMenuPopop : MonoBehaviour,IPointerDownHandler {
     { 
 
         initialFirstOpen.SetActive( true);
-        initialFirstOpen.transform.GetChild(0).GetComponent<Text>().text = "hours";
+        initialFirstOpen.transform.GetChild(0).GetComponent<Text>().text = thisChest.openDuration.Hours+" hours";
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("clicked chest");
-        ChestClickedOn();
+        if (thisChest.chestState != ChestState.Ready)
+        {
+            Debug.Log("clicked chest");
+            ChestClickedOn();
+        }
     }
 
 

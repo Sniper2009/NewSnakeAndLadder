@@ -22,6 +22,7 @@ public class DiceSaver : SaveableItem {
         //{
         //    Destroy(this.gameObject);
         //}
+        MenuSwipeManager.OnGoToDice += BrowseDice;
         DiceInfoSelect.OnUpdateDice += UpdateDice;
         PlayerDiceHolding.OnDecreaseCharge += UpdateDice;
         DiceInfoUpdate.OnDiceAdded += AddDice;
@@ -160,6 +161,7 @@ public class DiceSaver : SaveableItem {
         DiceLevelup.OnADiceUpdate -= UpdateDice;
         DiceInfoSelect.OnUpdateDice -= UpdateDice;
         DiceUIMenu.OnUpdateDice -= UpdateDice;
+        MenuSwipeManager.OnGoToDice -= BrowseDice;
         //  DiceInfoUpdate.OnStartBrowse -= BrowseDice;
     }
 }

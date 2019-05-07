@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f59b9493b0bd54d8c8bc928741328435, type: 3}
+  m_Name: Coin4
+  m_EditorClassIdentifier: 
+  coinImage: {fileID: 21300018, guid: 67ff02284472347a8af225a08cb85c55, type: 3}
+  gemValue: 999
+  coinValue: 125000
+  coinID: 4
+  description: "\u06CC\u06A9 \u06AF\u0648\u0646\u06CC \u0628\u0632\u0631\u06AF \u0637\u0644\u0627"

@@ -26,7 +26,7 @@ public class EndGamePlayerDisplay : MonoBehaviour {
         PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin") + CoinCollection.playersCoin[0]);
         safeImage.sprite = chestCollection.chestCollection[SafePickup.playerSafeID[0]].chestImage;
         ChestData cData = chestCollection.chestCollection[SafePickup.playerSafeID[0]];
-        SaveableChest newChest = new SaveableChest(cData.chestID, ChestState.Closed, System.DateTime.Now, cData.openDuration, cData.prize);
+        SaveableChest newChest = new SaveableChest(cData.chestID, ChestState.Closed, System.DateTime.Now, cData.openDuration,cData.chestType);
         if(playerNum>0)
         OnAddChest(newChest);
     }

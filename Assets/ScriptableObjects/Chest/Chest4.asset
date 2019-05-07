@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: Chest4
   m_EditorClassIdentifier: 
   chestID: 4
+  chestType: 3
   chestImage: {fileID: 21300006, guid: b691c1c10c20948a08801dfaa8fbdca5, type: 3}
   openDuration:
     seconds: 20
@@ -21,7 +22,4 @@ MonoBehaviour:
     month: 0
     year: 0
   prize:
-    prizeType: 1
-    coinAmount: 0
-    diceID: 4
-    diceAmount: 5
+    awardCards: []

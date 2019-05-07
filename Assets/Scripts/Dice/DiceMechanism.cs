@@ -47,6 +47,7 @@ public class DiceMechanism : MonoBehaviour {
         int resultIndex = Random.Range(0, diceNumbers.Count);
         int result = diceNumbers[resultIndex];
         diceBackGround.color= diceDesignCollection.diceFullDesigns[currentDiceID].color;
+        if(result<=6)
         resultOutput.sprite = diceDesignCollection.resultSprite[result];
         OnDiceRolled(result);
         if(OnDiceNumberCharged!=null)

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: New Dice Design Collection
   m_EditorClassIdentifier: 
   diceFullDesigns:
+  - {fileID: 11400000, guid: 5bfd6a73b6e644b6d8a0015113ff4248, type: 2}
   - {fileID: 11400000, guid: 097006023e6d94bb4a21e594e4acea65, type: 2}
   - {fileID: 11400000, guid: 5440982586b7b4abcaebc0b29db40a63, type: 2}
   - {fileID: 11400000, guid: 8606df13741f342b7b4875c51b0136d9, type: 2}

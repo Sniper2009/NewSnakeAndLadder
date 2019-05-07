@@ -22,6 +22,8 @@ public enum DiceRareness
 [CreateAssetMenu(menuName ="Dice/DiceFullDesign")]
 public class DiceFullDesign : ScriptableObject {
 
+    public Sprite diceImage;
+    public int diceID;
     public Color color;
     public List<int> nums;
     public string diceName;

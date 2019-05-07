@@ -28,20 +28,31 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
         DiceSelector.OnDiceSelected += DiceBoundaryCheck;
         PlayerDiceHolding.OnDiceChargeUpdate += UpdateChargeText;
         diceID = PlayerPrefs.GetInt(diceInSlot);
-        if (diceID == 0)
-        {
-            diceImage.sprite = null;
-            hasDice = false;
-        }
-        else
+
+        if (slotID == 0)
         {
             diceDesignObject.SetActive(true);
-            diceDesignApply.ChangeID(diceID);
+            diceDesignApply.ChangeID(0);
             hasDice = true;
             UpdateChargeText();
-           // diceImage.sprite = DiceImageReader.diceImages[diceID];
         }
-       
+
+        else
+        {
+            if (diceID == 0)
+            {
+                diceImage.sprite = null;
+                hasDice = false;
+            }
+            else
+            {
+                diceDesignObject.SetActive(true);
+                diceDesignApply.ChangeID(diceID);
+                hasDice = true;
+                UpdateChargeText();
+                // diceImage.sprite = DiceImageReader.diceImages[diceID];
+            }
+        }
        
     }
 
