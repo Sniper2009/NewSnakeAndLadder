@@ -14,7 +14,7 @@ MonoBehaviour:
   diceImage: {fileID: 21300000, guid: 55925f1fe4d3e44a4bd6a06fe3f55999, type: 3}
   diceID: 6
   color: {r: 0.9137255, g: 0.29526395, b: 0.27058828, a: 0.8745098}
-  nums: 0100000000000000
+  nums: 050000000300000001000000
   diceName: test1
   diceStory: a story
   diceClass: 0
