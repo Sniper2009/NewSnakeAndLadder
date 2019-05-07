@@ -22,7 +22,7 @@ public class DiceMechanism : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
     
-        DiceSelect.OnDiceUpdate += ChangeDice;
+        DiceSelector.OnDiceUpdate += ChangeDice;
         ChangeDice(0);
 	}
 	
@@ -59,6 +59,6 @@ public class DiceMechanism : MonoBehaviour {
     private void OnDestroy()
     {
        
-        DiceSelect.OnDiceUpdate -= ChangeDice;
+        DiceSelector.OnDiceUpdate -= ChangeDice;
     }
 }

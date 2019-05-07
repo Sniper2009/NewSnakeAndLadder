@@ -40,8 +40,8 @@ public class DiceSelect : MonoBehaviour {
             diceChangeError.text = "";
            // diceSceneImage.sprite = diceCollection.diceFullDesigns[currentDiceID].diceImages[0];
             OnDiceUpdate(currentDiceID);
-            OnDiceNumbers(diceCollection.diceFullDesigns[currentDiceID].nums);
-            diceSelectPanel.SetActive(false);
+//            OnDiceNumbers(diceCollection.diceFullDesigns[currentDiceID].nums);
+          //  diceSelectPanel.SetActive(false);
         }
     }
 
@@ -62,7 +62,7 @@ public class DiceSelect : MonoBehaviour {
           //  diceSceneImage.sprite = diceCollection.dices[currentDiceID].diceImages[0];
             OnDiceUpdate(currentDiceID);
             OnDiceNumbers(diceCollection.diceFullDesigns[currentDiceID].nums);
-            diceSelectPanel.SetActive(false);
+           // diceSelectPanel.SetActive(false);
         }
     }
 

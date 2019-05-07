@@ -35,7 +35,7 @@ public class LandPointShow : MonoBehaviour {
         MoveOneTile.OnGamestateChanged += WaitingForDiceRoll;
         MoveOneTile.OnGamestateChanged += DiceRollHappened;
 
-        DiceSelect.OnDiceNumbers += DisplayPointers;
+        DiceSelector.OnDiceNumbers += DisplayPointers;
         locationCurrentTile = GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;
         if(GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>()!=null)
         DisplayPointers(diceCollection.diceFullDesigns[GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
@@ -94,6 +94,6 @@ public class LandPointShow : MonoBehaviour {
     {
         MoveOneTile.OnGamestateChanged -= WaitingForDiceRoll;
         MoveOneTile.OnGamestateChanged -= DiceRollHappened;
-        DiceSelect.OnDiceNumbers -= DisplayPointers;
+        DiceSelector.OnDiceNumbers -= DisplayPointers;
     }
 }

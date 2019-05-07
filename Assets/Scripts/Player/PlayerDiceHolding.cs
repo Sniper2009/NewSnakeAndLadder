@@ -32,7 +32,7 @@ public class PlayerDiceHolding : MonoBehaviour {
     {
         DiceMechanism.OnDiceNumberCharged += decreaseDiceCharge;
         DiceMechanism.OnCheckDiceCharge += checkDiceCharge;
-        DiceSelect.OnDiceUpdate += UpdateDice;
+        DiceSelector.OnDiceUpdate += UpdateDice;
 
     }
 
@@ -74,14 +74,14 @@ public class PlayerDiceHolding : MonoBehaviour {
     {
         DiceMechanism.OnDiceNumberCharged -= decreaseDiceCharge; 
         DiceMechanism.OnCheckDiceCharge -= checkDiceCharge;
-        DiceSelect.OnDiceUpdate -= UpdateDice;
+        DiceSelector.OnDiceUpdate -= UpdateDice;
     }
 
     private void OnDestroy()
     {
         DiceMechanism.OnDiceNumberCharged -= decreaseDiceCharge;
         DiceMechanism.OnCheckDiceCharge -= checkDiceCharge;
-        DiceSelect.OnDiceUpdate -= UpdateDice;
+        DiceSelector.OnDiceUpdate -= UpdateDice;
     }
 
 

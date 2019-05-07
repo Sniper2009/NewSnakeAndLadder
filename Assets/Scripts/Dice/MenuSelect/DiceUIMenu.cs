@@ -133,7 +133,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
       //  GetComponent<Image>().sprite = DiceImageReader.diceImages[thisDiceID];
 
         transform.GetChild(0).GetComponent<Text>().text = "level " + (thisDice.level+1);
-        transform.GetChild(1).GetComponent<Text>().text = thisDice.currentCharge + "/"+DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
+        transform.GetChild(1).GetChild(0).GetComponent<Text>().text = thisDice.currentCharge + "/"+DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
 
         transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().localScale = 
         new Vector2(Mathf.Min(1,(float)thisDice.amountAwarded / DiceDefaultHolder.awardForNextLevel[thisDice.level]), 1);

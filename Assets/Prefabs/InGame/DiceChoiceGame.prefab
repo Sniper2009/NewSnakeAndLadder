@@ -369,7 +369,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 'remaining: inf'
+  m_Text: 
 --- !u!114 &114811368605655514
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -386,6 +386,7 @@ MonoBehaviour:
   diceDesignApply: {fileID: 114244065268407266}
   diceDesignObject: {fileID: 1167098155991154}
   slotID: 1
+  dices: {fileID: 11400000, guid: c909e4b43affa4559a54342b7f564f3f, type: 2}
 --- !u!114 &114908175948918972
 MonoBehaviour:
   m_ObjectHideFlags: 1

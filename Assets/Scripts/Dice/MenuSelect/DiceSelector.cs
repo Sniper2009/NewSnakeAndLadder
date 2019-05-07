@@ -6,26 +6,36 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class DiceSelector : MonoBehaviour,IPointerDownHandler {
-     Image Border;
+
+    public delegate void RetVoidArgIntArray(List<int> moves);
+    public static event RetVoidArgIntArray OnDiceNumbers;
+
+    public delegate void RetVoidArgInt(int num);
+    public static event RetVoidArgInt OnDiceUpdate;
+
+    Image Border;
 
     [SerializeField] Text currentPlayerCharge;
     [SerializeField] Image diceImage;
     [SerializeField] DiceDesignApply diceDesignApply;
     [SerializeField] GameObject diceDesignObject;
     [SerializeField] int slotID;
+    [SerializeField] DiceDesignCollection dices;
     bool hasDice = false;
     
     string diceInSlot = "diceSelect_";
     int diceID;
 
-    public delegate void RetVoidArgInt(int num);
+   
     public static event RetVoidArgInt OnDiceSelected;
 
 
     void Start()
     {
+       
         diceInSlot += slotID;
         DiceSelector.OnDiceSelected += DiceBoundaryCheck;
+        DiceSelect.OnDiceUpdate += TurnDiceOn;
         PlayerDiceHolding.OnDiceChargeUpdate += UpdateChargeText;
         diceID = PlayerPrefs.GetInt(diceInSlot);
 
@@ -34,7 +44,7 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
             diceDesignObject.SetActive(true);
             diceDesignApply.ChangeID(0);
             hasDice = true;
-            UpdateChargeText();
+            UpdateBorder();
         }
 
         else
@@ -49,6 +59,7 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
                 diceDesignObject.SetActive(true);
                 diceDesignApply.ChangeID(diceID);
                 hasDice = true;
+                UpdateBorder();
                 UpdateChargeText();
                 // diceImage.sprite = DiceImageReader.diceImages[diceID];
             }
@@ -66,16 +77,13 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
     }
 
 
-    public void UpdateChargeText()
+    void UpdateBorder()
     {
-
-     //   diceID = DiceSelect.playerDice[GameTurnManager.playerTurn];
-     
-        if (DiceSaver.instance.GetDices(diceID).currentCharge <= 0 && DiceSelect.playerDice==diceID)
+        if (DiceSaver.instance.GetDices(diceID).currentCharge <= 0 && DiceSelect.playerDice == diceID)
         {
             Border.color = Color.red;
         }
-        else if(DiceSaver.instance.GetDices(diceID).currentCharge > 0 && DiceSelect.playerDice == diceID)
+        else if (DiceSaver.instance.GetDices(diceID).currentCharge > 0 && DiceSelect.playerDice == diceID)
         {
             Border.color = Color.green;
         }
@@ -83,13 +91,24 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
         {
             Border.color = Color.black;
         }
+    }
+
+
+    public void UpdateChargeText()
+    {
+
+        Debug.Log("in update dice");
+     //   diceID = DiceSelect.playerDice[GameTurnManager.playerTurn];
+     
+       
         //if (diceID == 0)
         //{
         //    currentPlayerCharge.text = "Remaining: inf";
         //}
         //else
         //{
-            currentPlayerCharge.text = "Remaining: " + DiceSaver.instance.GetDices(diceID).currentCharge;
+            currentPlayerCharge.text =  DiceSaver.instance.GetDices(diceID).currentCharge+"/"+DiceDefaultHolder.
+            maxChargePErLevelStatic[DiceSaver.instance.GetDices(diceID).level];
        // }
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -107,6 +126,28 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
         }
       //  Debug.Log()
         OnDiceSelected(diceID);
+        OnDiceUpdate(diceID);
+        OnDiceNumbers(dices.diceFullDesigns[diceID].nums);
+    }
+
+    void TurnDiceOn(int ID)
+    {
+        if(ID==diceID)
+        {
+            if (DiceSaver.instance.GetDices(diceID).currentCharge > 0)
+            {
+                Border.color = Color.green;
+
+            }
+            else
+            {
+                Border.color = Color.red;
+            }
+            //  Debug.Log()
+            OnDiceSelected(diceID);
+            OnDiceUpdate(diceID);
+            OnDiceNumbers(dices.diceFullDesigns[diceID].nums);
+        }
     }
 
 
@@ -121,7 +162,9 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
 
     void OnDestroy()
     {
+
         DiceSelector.OnDiceSelected -= DiceBoundaryCheck;
         PlayerDiceHolding.OnDiceChargeUpdate -= UpdateChargeText;
+        DiceSelect.OnDiceUpdate -= TurnDiceOn;
     }
 }

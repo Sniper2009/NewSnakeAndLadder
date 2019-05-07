@@ -76,7 +76,7 @@ public class DiceSelectedUI : MonoBehaviour {
         //GetComponent<Image>().sprite = DiceImageReader.diceImages[thisDice.diceID];
 
         transform.GetChild(0).GetComponent<Text>().text = "level " + (thisDice.level + 1);
-        transform.GetChild(1).GetComponent<Text>().text = thisDice.currentCharge + "/"+ DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
+        transform.GetChild(1).GetChild(0).GetComponent<Text>().text = thisDice.currentCharge + "/"+ DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
 
         transform.GetChild(2).GetChild(0).GetComponent<RectTransform>().localScale =
          new Vector2(Mathf.Min(1.0f, (float)thisDice.amountAwarded / DiceDefaultHolder.awardForNextLevel[thisDice.level]), 1);
