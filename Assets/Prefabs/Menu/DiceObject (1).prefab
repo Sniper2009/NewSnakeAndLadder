@@ -578,6 +578,7 @@ MonoBehaviour:
   diceUse: {fileID: 1794858125492664}
   diceDisplayDesign: {fileID: 1332454221636764}
   isChargingObject: {fileID: 1856828514102348}
+  upgradeButton: {fileID: 1720721994427084}
 --- !u!114 &114204380291456982
 MonoBehaviour:
   m_ObjectHideFlags: 1

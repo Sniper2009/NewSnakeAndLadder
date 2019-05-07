@@ -33,6 +33,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     [SerializeField] GameObject diceUse;
     [SerializeField] GameObject diceDisplayDesign;
     [SerializeField] GameObject isChargingObject;
+    [SerializeField] GameObject upgradeButton;
 
     bool isDiceSelected;
 
@@ -82,7 +83,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
     void AssignDice(SaveableDice dice)
     {
-        Debug.Log("new dice:  " + dice.diceID + "    " + thisDiceID);
+//        Debug.Log("new dice:  " + dice.diceID + "    " + thisDiceID);
         if (dice.diceID == thisDiceID)
         {
 
@@ -104,16 +105,19 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
     {
         if (thisDice.isCharging)
         {
+            Debug.Log("start charge");
             isChargingObject.SetActive(true);
             startChargeTime = new System.DateTime(thisDice.startToChargeTime.year, thisDice.startToChargeTime.month, thisDice.startToChargeTime.day,
                 thisDice.startToChargeTime.hour, thisDice.startToChargeTime.minute, thisDice.startToChargeTime.seconds);
             diceChargingText.enabled = true;
+            upgradeButton.SetActive(false);
             chargeCoverImage.color = chargingColor;
             foreach (var item in DiceDefaultHolder.diceChargeTimeStatic)
             {
                 if(item.diceRareness==diceDesignCollection.diceFullDesigns[thisDice.diceID].diceRareness && item.diceLevel==thisDice.level)
                 {
                     chargeDuration = new System.TimeSpan(item.chargeTime.hour, item.chargeTime.minute, item.chargeTime.seconds);
+                    Debug.Log("got time:  " + chargeDuration);
                     break;
                 }
             }
@@ -156,9 +160,11 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
                 thisDice.currentCharge = DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level];
                 diceChargingText.enabled = false;
                 chargeCoverImage.color = chargeDoneColor;
+                DisplayDiceInfo();
                 OnUpdateDice(thisDice);
                 isChargingObject.SetActive(false);
                 OnDiceChargeStateChanged(thisDice);
+                upgradeButton.SetActive(true);
 
 
             }

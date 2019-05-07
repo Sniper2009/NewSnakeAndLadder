@@ -9,6 +9,7 @@ public class MenuSwipeManager : MonoBehaviour {
     [SerializeField] GameObject mainMenuObject;
     [SerializeField] GameObject diceMenuObject;
     [SerializeField] GameObject shopMenuObject;
+    [SerializeField] CoinObjectList coins;
 	// Use this for initialization
 	void Start () {
 
@@ -32,6 +33,7 @@ public class MenuSwipeManager : MonoBehaviour {
     }
     public void GoToShopMenu()
     {
+        coins.StartList();
         mainMenuObject.SetActive(false);
         diceMenuObject.SetActive(false);
         shopMenuObject.SetActive(true);

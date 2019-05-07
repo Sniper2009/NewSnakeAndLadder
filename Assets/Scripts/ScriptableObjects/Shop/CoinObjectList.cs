@@ -10,7 +10,7 @@ public class CoinObjectList : ScriptableObject {
     public static List<CoinObject> coinObjectsStatic;
 
 
-    private void OnEnable()
+    public  void StartList()
     {
         coinObjectsStatic = new List<CoinObject>();
         foreach (var item in coinObjects)
