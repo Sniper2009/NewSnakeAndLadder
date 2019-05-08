@@ -29,15 +29,15 @@ public class AwardGenerator : MonoBehaviour {
         ChestType chestType = chest.chestType;
         Prize prize = new Prize();
         prize.awardCards = new List<AwardCard>();
-        int normalDiceNum = Random.Range(awardGenerate.lowerNormalDiceNum[(int)chestType], awardGenerate.higherNormalDiceNum[(int)chestType]);
-        int rareDiceNum = Random.Range(awardGenerate.lowerRareDiceNum[(int)chestType], awardGenerate.higherRareDiceNum[(int)chestType]);
-        int talismDiceNum = Random.Range(awardGenerate.lowerTalismDiceNum[(int)chestType], awardGenerate.higherTalismDiceNum[(int)chestType]);
-        int coinNum = Random.Range(awardGenerate.lowerCoinNum[(int)chestType], awardGenerate.higherCoinNum[(int)chestType]);
-        int gemNum = Random.Range(awardGenerate.lowerGemNum[(int)chestType], awardGenerate.higherGemNum[(int)chestType]);
+        int normalDiceNum = Random.Range(awardGenerate.lowerNormalDiceNum[(int)chestType], awardGenerate.higherNormalDiceNum[(int)chestType]+1);
+        int rareDiceNum = Random.Range(awardGenerate.lowerRareDiceNum[(int)chestType], awardGenerate.higherRareDiceNum[(int)chestType]+1);
+        int talismDiceNum = Random.Range(awardGenerate.lowerTalismDiceNum[(int)chestType], awardGenerate.higherTalismDiceNum[(int)chestType]+1);
+        int coinNum = Random.Range(awardGenerate.lowerCoinNum[(int)chestType], awardGenerate.higherCoinNum[(int)chestType]+1);
+        int gemNum = Random.Range(awardGenerate.lowerGemNum[(int)chestType], awardGenerate.higherGemNum[(int)chestType]+1);
 
-        int normalCardNum = Random.Range(awardGenerate.normalLowDiceCard[(int)chestType], awardGenerate.normalHighDiceCard[(int)chestType]);
-        int rareCardNum = Random.Range(awardGenerate.rareLowDiceCard[(int)chestType], awardGenerate.rareHighDiceCard[(int)chestType]);
-        int talismCardNum = Random.Range(awardGenerate.talismLowDiceCard[(int)chestType], awardGenerate.talismHighDiceCard[(int)chestType]);
+        int normalCardNum = Random.Range(awardGenerate.normalLowDiceCard[(int)chestType], awardGenerate.normalHighDiceCard[(int)chestType]+1);
+        int rareCardNum = Random.Range(awardGenerate.rareLowDiceCard[(int)chestType], awardGenerate.rareHighDiceCard[(int)chestType]+1);
+        int talismCardNum = Random.Range(awardGenerate.talismLowDiceCard[(int)chestType], awardGenerate.talismHighDiceCard[(int)chestType]+1);
 
         if (coinNum>0)
         {
@@ -122,8 +122,12 @@ public class AwardGenerator : MonoBehaviour {
             {
                 foreach (var item in newCards)
                 {
-                    item.prizeAmount++;
-                    diceNum--;
+                    int rand = Random.Range(0, 2);
+                    if (rand > 0)
+                    {
+                        item.prizeAmount++;
+                        diceNum--;
+                    }
                     if (diceNum <= 0)
                         break;
                 }
