@@ -131,7 +131,7 @@ public class DiceSaver : SaveableItem {
 
     void BrowseDice()
     {
-        Debug.Log("browse dice");
+      //  Debug.Log("browse dice");
         userDices = LoadItems().userDices;
         if (userDices == null || userDices.Count == 0)
         {

@@ -19,8 +19,10 @@ public class ChestData : ScriptableObject {
 
     //ID: is it's order in collection
     public int chestID;
+    public string chestDescription;
     public ChestType chestType;
    public Sprite chestImage;
+    public int gemToOpen;
    
     public DateTimeSaveable openDuration;
     public Prize prize;

@@ -103,7 +103,7 @@ void CheckForUIElements()
 
 
 
-        if (thisDice.currentCharge <= DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level] && PlayerPrefs.GetInt("Coin") >= DiceDefaultHolder.moneyForChargeStatic[thisDice.level])
+        if (thisDice.currentCharge < DiceDefaultHolder.maxChargePErLevelStatic[thisDice.level] && PlayerPrefs.GetInt("Coin") >= DiceDefaultHolder.moneyForChargeStatic[thisDice.level])
         {
             chargeImage.color = Color.yellow;
             ChargeButton.enabled = true;

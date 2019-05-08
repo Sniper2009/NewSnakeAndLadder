@@ -19,7 +19,7 @@ public class DiceImageReader : MonoBehaviour {
             if (diceImages == null)
                 diceImages = new List<Sprite>();
             diceImages.Add(Resources.Load<Sprite>("Dice/dice"+i));
-            Debug.Log("diceread: " + i + "   " + diceImages.Count);
+         
         }
     }
 }

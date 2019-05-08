@@ -80,6 +80,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
             Debug.Log("in edit");
             thisDice = newDice;
             DisplayDiceInfo();
+
             OnThisDiceAssigned(thisDice);
         }
     }
@@ -92,6 +93,7 @@ public class DiceUIMenu : MonoBehaviour,IPointerDownHandler {
 
             //  Debug.Log("assiii:  " + dice.diceID + "   " + thisDiceID);
             thisDice = dice;
+            GetComponent<DiceLevelup>().EnrollInEvent();
             OnThisDiceAssigned(thisDice);
             for (int i = 0; i < childNum; i++)
             {

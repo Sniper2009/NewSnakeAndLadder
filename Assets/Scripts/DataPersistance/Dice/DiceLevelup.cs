@@ -14,12 +14,11 @@ public class DiceLevelup : MonoBehaviour {
     [SerializeField]Color nonUpgradeColor;
     [SerializeField]Color UpgradeColor;
 
-    private void Start()
+
+
+    public void EnrollInEvent()
     {
         GetComponent<DiceUIMenu>().OnThisDiceAssigned += SetDice;
-       
-
-
     }
 
 

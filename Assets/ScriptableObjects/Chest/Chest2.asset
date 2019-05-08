@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Name: Chest2
   m_EditorClassIdentifier: 
   chestID: 2
+  chestDescription: "\u0635\u0646\u062F\u0648\u0642 \u0628\u0631\u0646\u0632"
   chestType: 1
   chestImage: {fileID: 21300002, guid: b691c1c10c20948a08801dfaa8fbdca5, type: 3}
+  gemToOpen: 2
   openDuration:
     seconds: 20
     minute: 0

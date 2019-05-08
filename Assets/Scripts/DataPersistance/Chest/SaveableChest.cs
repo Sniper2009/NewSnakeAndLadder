@@ -36,7 +36,7 @@ public class SaveableChest  {
 
         openDuration = new TimeSpan(openDurationArg.hour,openDurationArg.minute,openDurationArg.seconds);
       
-        Debug.Log( " sss  " + openDuration);
+//        Debug.Log( " sss  " + openDuration);
        // openOrderTimeSaveable = new DateTimeSaveable(0, 0, 0, openOrderTimeInSystem.Hour, openOrderTimeInSystem.Minute, openOrderTimeInSystem.Second);
       
     }
@@ -53,7 +53,7 @@ public class SaveableChest  {
 
         openDuration = new TimeSpan(openDurationArg.hour, openDurationArg.minute, openDurationArg.seconds);
 
-        Debug.Log(" sss  " + openDuration);
+      //  Debug.Log(" sss  " + openDuration);
         openOrderTimeSaveable = new DateTimeSaveable(openOrderTimeInSystem.Year, openOrderTimeInSystem.Month, openOrderTimeInSystem.Day, 
         openOrderTimeInSystem.Hour, openOrderTimeInSystem.Minute, openOrderTimeInSystem.Second);
 

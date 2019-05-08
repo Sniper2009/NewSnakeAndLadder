@@ -4,51 +4,67 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class ChestMenuPopop : MonoBehaviour,IPointerDownHandler {
+public class ChestMenuPopop : MonoBehaviour {
 
-    public delegate void RetVoidArgSavechest();
-    public static event RetVoidArgSavechest OnChestInOpening;
+    public delegate void RetVoidArgVoid();
+    public static event RetVoidArgVoid OnChestInOpening;
+    public static event RetVoidArgVoid OnPopupClosing;
 
+    public delegate void RetVoidArgSavechest(SaveableChest chest);
+    public event RetVoidArgSavechest OnChestAssigned;
     bool noChestOpening;
     bool thisChestOpening;
+    
 
     System.TimeSpan remainingTime;
 
     SaveableChest thisChest;
 
     [SerializeField] GameObject menuPopup;
-    [SerializeField] Image chestImage;
+    //[SerializeField] Image chestImage;
     [SerializeField] Text remainingTimeText;
-    [SerializeField] Text chestName;
-    [SerializeField] Text minPrize;
+    [SerializeField] Text gemToPay;
+    [SerializeField] Text hourText;
+  
     [SerializeField] GameObject GemOpen;
     [SerializeField] GameObject initialFirstOpen;
     [SerializeField] ChestCollection chestCollection;
-	// Use this for initialization
-	void Awake () {
+
+    [SerializeField] List<string> persianPhrases;
+    // Use this for initialization
+    void Awake () {
         noChestOpening = true;
 
         menuPopup.SetActive(false);
-        GetComponent<ChestMenuBehaviour>().OnChestAssigned += AssignChest;
-       GetComponent<ChestMenuBehaviour>().OnChestUnlocked += UnlockAttempt;
+        ChestMenuBehaviour.OnChestClicked += ThisChetopeningUpdate;
+        ChestMenuBehaviour.OnChestAssigned += AssignChest;
+       ChestMenuBehaviour.OnChestUnlocked += UnlockAttempt;
         ChestMenuPopop.OnChestInOpening += CheckChestStatus;
         ChestMenuBehaviour.OnChestReady += AChestReady;
+        ChestMenuBehaviour.OnChestBuyGems += OnExitClicked;
+        ChestMenuBehaviour.OnChestBrowsedUnlocking += OneChestUnlocking;
+        ChessMenuUI.OnStateChangedVoid += OneChestFinishedLock;
+        ChestMenuBehaviour.InOpeningChestBought += OneChestFinishedLock;
 
-	}
+
+    }
 
 
     void AssignChest(SaveableChest chest)
     {
         Debug.Log("assignneeddd");
         thisChest = chest;
-        chestImage.sprite = chestCollection.chestCollection[thisChest.chestID].chestImage;
+//        OnChestAssigned(thisChest);
+
         if (chest.chestState == ChestState.InOpening)
         {
             thisChestOpening = true;
             noChestOpening = false;
-            OnChestInOpening();
+          //  OnChestInOpening();
 
         }
+        OnChestAssigned(thisChest);
+        ChestClickedOn();
     }
     
     void DisableAll()
@@ -83,9 +99,15 @@ public class ChestMenuPopop : MonoBehaviour,IPointerDownHandler {
         }
     }
 
+
+    void ThisChetopeningUpdate(bool val)
+    {
+        thisChestOpening = val;
+    }
+
     void UnlockAttempt(SaveableChest chest)
     {
-
+        thisChest = chest;
         thisChest.chestState = ChestState.InOpening;
             thisChestOpening = true;
        
@@ -94,6 +116,21 @@ public class ChestMenuPopop : MonoBehaviour,IPointerDownHandler {
         noChestOpening = false;
         OnChestInOpening();
         ChestClickedOn();
+    }
+
+
+    void OneChestUnlocking(SaveableChest chest)
+    {
+        thisChest = chest;
+        thisChest.chestState = ChestState.InOpening;
+        thisChestOpening = true;
+
+
+
+        noChestOpening = false;
+        OnChestInOpening();
+        ChestClickedOn();
+        OnExitClicked();
     }
 
     void CheckChestStatus()
@@ -110,11 +147,12 @@ public class ChestMenuPopop : MonoBehaviour,IPointerDownHandler {
     void ActivateThisChestInOpening()
     {
         GemOpen.SetActive(true);
-        GemOpen.transform.GetChild(0).GetComponent<Text>().text = "Gems";
+        gemToPay.text = chestCollection.chestCollection[thisChest.chestID].gemToOpen.ToString();
+       
         remainingTimeText.enabled = true;
         remainingTimeText.color = Color.green;
         remainingTime = (thisChest.openOrderTimeInSystem + thisChest.openDuration) - System.DateTime.Now;
-        remainingTimeText.text = "remaining: "+remainingTime.Hours+":"+remainingTime.Minutes+":"+remainingTime.Seconds;
+        remainingTimeText.text = persianPhrases[5]+remainingTime.Hours+":"+remainingTime.Minutes+":"+remainingTime.Seconds;
     }
 
     void AChestReady()
@@ -129,48 +167,72 @@ public class ChestMenuPopop : MonoBehaviour,IPointerDownHandler {
         if (thisChestOpening == true)
         {
             remainingTime = (thisChest.openOrderTimeInSystem + thisChest.openDuration) - System.DateTime.Now;
-            remainingTimeText.text = "remaining: " + remainingTime.Hours + ":" + remainingTime.Minutes + ":" + remainingTime.Seconds;
+            remainingTimeText.text = persianPhrases[5] + remainingTime.Hours + ":" + remainingTime.Minutes + ":" + remainingTime.Seconds;
+            if (remainingTime.Hours <= 0 && remainingTime.Minutes <= 0 && remainingTime.Seconds <= 0)
+            {
+
+                OnExitClicked();
+            }
         }
     }
 
+    void OneChestFinishedLock()
+    {
+      
+        if (menuPopup.activeSelf == false)
+            return;
+        if(thisChest.chestState!=ChestState.InOpening)
+        {
+            noChestOpening = true;
+            thisChestOpening = false;
+            ChestClickedOn();
+        }
+        else
+        {
+            noChestOpening = true;
+            thisChestOpening = false;
+        }
+    }
+
+  
 
     void ActvateOtherChestInOpening()
     {
         GemOpen.SetActive( true);
-        GemOpen.transform.GetChild(0).GetComponent<Text>().text = "Gems";
+        gemToPay.text = chestCollection.chestCollection[thisChest.chestID].gemToOpen.ToString();
+
         remainingTimeText.enabled = true;
         remainingTimeText.color = Color.red;
-        remainingTimeText.text = "Another in opening";
+        remainingTimeText.text = persianPhrases[6];
     }
 
     void ActivateInitialUnlock()
     { 
 
         initialFirstOpen.SetActive( true);
-        initialFirstOpen.transform.GetChild(0).GetComponent<Text>().text = thisChest.openDuration.Hours+" hours";
+        hourText.text = thisChest.openDuration.Hours.ToString();
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if (thisChest.chestState != ChestState.Ready)
-        {
-            Debug.Log("clicked chest");
-            ChestClickedOn();
-        }
-    }
 
 
     public void OnExitClicked()
     {
+        OnPopupClosing();
         menuPopup.SetActive(false);
     }
 
     // Update is called once per frame
     void OnDestroy () {
-        GetComponent<ChestMenuBehaviour>().OnChestAssigned -= AssignChest;
-        GetComponent<ChestMenuBehaviour>().OnChestUnlocked -= UnlockAttempt;
+        ChestMenuBehaviour.OnChestClicked -= ThisChetopeningUpdate;
+        ChestMenuBehaviour.OnChestAssigned -= AssignChest;
+        ChestMenuBehaviour.OnChestUnlocked -= UnlockAttempt;
         ChestMenuPopop.OnChestInOpening -= CheckChestStatus;
         ChestMenuBehaviour.OnChestReady -= AChestReady;
+        ChestMenuBehaviour.OnChestBuyGems -= OnExitClicked;
+        ChestMenuBehaviour.OnChestBrowsedUnlocking -= OneChestUnlocking;
+        ChessMenuUI.OnStateChangedVoid -= OneChestFinishedLock;
+        ChestMenuBehaviour.InOpeningChestBought -= OneChestFinishedLock;
+
     }
 
   
