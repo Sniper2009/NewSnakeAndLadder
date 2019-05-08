@@ -103,26 +103,30 @@ public class AwardGenerator : MonoBehaviour {
     
     {
         List<AwardCard> newCards = new List<AwardCard>();
-        for (int i = 0; i < cardNum; i++)
+
+        if (diceNum > 0 && cardNum>0)
         {
-            AwardCard temp = new AwardCard();
-            temp.prizeID = 1;
-            temp.diceRareness = rareness;
-            int index = Random.Range(0, diceList.Count);
-            temp.diceID =diceList[ index].diceID;
-            diceList.RemoveAt(index);
-            temp.prizeAmount = 1;
-            newCards.Add(temp);
-        }
-        diceNum -= cardNum;
-        while (diceNum > 0)
-        {
-            foreach (var item in newCards)
+            for (int i = 0; i < cardNum; i++)
             {
-                item.prizeAmount++;
-                diceNum--;
-                if (diceNum <= 0)
-                    break;
+                AwardCard temp = new AwardCard();
+                temp.prizeID = 1;
+                temp.diceRareness = rareness;
+                int index = Random.Range(0, diceList.Count);
+                temp.diceID = diceList[index].diceID;
+                diceList.RemoveAt(index);
+                temp.prizeAmount = 1;
+                newCards.Add(temp);
+            }
+            diceNum -= cardNum;
+            while (diceNum > 0)
+            {
+                foreach (var item in newCards)
+                {
+                    item.prizeAmount++;
+                    diceNum--;
+                    if (diceNum <= 0)
+                        break;
+                }
             }
         }
 

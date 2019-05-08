@@ -24,7 +24,8 @@ public class CoinUIManage : MonoBehaviour {
     void CoinAMountChange(int amount)
     {
         coinamount += amount;
-        PlayerPrefs.SetInt("Coin", coinamount);  
+        PlayerPrefs.SetInt("Coin", coinamount);
+        coinText.text = coinamount.ToString();
     }
 
 

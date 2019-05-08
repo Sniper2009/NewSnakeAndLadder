@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class AwardCardDisplay : MonoBehaviour {
+public class AwardCardDisplay : MonoBehaviour,IPointerDownHandler {
 
     [SerializeField] Image awardImage;
     [SerializeField] Text awardDescription;
@@ -18,6 +19,7 @@ public class AwardCardDisplay : MonoBehaviour {
     List<AwardCard> cardsToDisplay;
     bool canShow;
     [SerializeField] GameObject cardPanel;
+    bool startedDisplay = false;
 
 	// Use this for initialization
 	void Start () {
@@ -30,18 +32,29 @@ public class AwardCardDisplay : MonoBehaviour {
     {
         Debug.Log("card addd: "+card.prizeID);
         cardsToDisplay.Add(card);
-    }
-
-    private void Update()
-    {
-        if(canShow==true && cardsToDisplay.Count>0)
+        if(startedDisplay==false)
         {
-            StartCoroutine(DisplayCard(cardsToDisplay[0]));
+            DisplayCard(cardsToDisplay[0]);
+            cardPanel.SetActive(true);
+            startedDisplay = true;
         }
     }
 
+  
 
 
+    public void GoToNext()
+    {
+        if(cardsToDisplay.Count>0)
+        {
+            DisplayCard(cardsToDisplay[0]);
+
+        }
+        else
+        {
+            cardPanel.SetActive(false);
+        }
+    }
     void DisplayCoin()
     {
         awardImage.sprite = coinSprite;
@@ -62,11 +75,11 @@ public class AwardCardDisplay : MonoBehaviour {
     }
 
 
-    IEnumerator DisplayCard(AwardCard card)
+    void DisplayCard(AwardCard card)
     {
         Debug.Log("in display  "+card.prizeID);
         canShow = false;
-        cardPanel.SetActive(true);
+
         awardAmount.text = card.prizeAmount.ToString();
 
         if(card.prizeID==0)
@@ -83,16 +96,22 @@ public class AwardCardDisplay : MonoBehaviour {
         {
             DisplayGem();
         }
-        yield return new WaitForSeconds(3);
+     
         cardsToDisplay.RemoveAt(0);
-        cardPanel.SetActive(false);
-        canShow = true;
+       // cardPanel.SetActive(false);
+       
 
     }
 
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        GoToNext();
+    }
 
     private void OnDestroy()
     {
         AwardGenerator.OnAwardReceived -= AddToCards;
     }
+
+  
 }
