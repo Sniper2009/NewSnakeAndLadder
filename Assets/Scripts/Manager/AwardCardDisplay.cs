@@ -52,6 +52,7 @@ public class AwardCardDisplay : MonoBehaviour,IPointerDownHandler {
         }
         else
         {
+            startedDisplay = false;
             cardPanel.SetActive(false);
         }
     }
