@@ -66,6 +66,7 @@ public class MoveOneTile : MonoBehaviour {
             {
                 OnPlayerWon(playerNum);
                 keepMoving = false;
+                yield break;
             }
 
             if (keepMoving == true)
