@@ -40,6 +40,11 @@ public class ChestSaver : SaveableItem {
     }
 
 
+    public  int ReturnChestNum()
+    {
+        return userChests.Count;
+    }
+
     void DisplayMenu()
     {
         BrowseChests();
@@ -69,6 +74,7 @@ public class ChestSaver : SaveableItem {
 
     public void AddChest(SaveableChest chest)
     {
+
         //  (int chestID, ChestState chestState, DateTime openOrderTimeInSystem, TimeSpan openDuration, Prize prize)
         SaveableChest newChest = new SaveableChest(chest.chestID, chest.chestState, chest.openOrderTimeInSystem, chest.openDurationSaveable,chest.chestType);
         userChests.Add(newChest);

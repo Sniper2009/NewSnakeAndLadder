@@ -7,7 +7,7 @@ public enum GameState
 {
     WaitingForDice,
     PlayerMoving,
-    WaitingForAI
+    WaitingForOther
 }
 
 public class GameStatusUIManager : MonoBehaviour {
@@ -34,7 +34,7 @@ public class GameStatusUIManager : MonoBehaviour {
             stateText.text = "Roll the dice";
         }
 
-        if (newState==GameState.PlayerMoving||newState==GameState.WaitingForAI)
+        if (newState==GameState.PlayerMoving||newState==GameState.WaitingForOther)
         {
             Dice.SetActive(false);
             stateText.text = "Player is Moving";

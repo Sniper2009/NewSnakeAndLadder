@@ -13,6 +13,7 @@ public class GemManager : MonoBehaviour {
 	void Start () {
         AwardGenerator.OnAwardReceived += CheckPrize;
         ChestMenuBehaviour.OnChargeGem += UpdateGemAMount;
+        ShopManager.OnshopChangedGem += UpdateGemAMount;
         gemAmount = PlayerPrefs.GetInt("Gem");
         gemText.text = gemAmount.ToString();
 	}
@@ -36,5 +37,6 @@ public class GemManager : MonoBehaviour {
     {
         AwardGenerator.OnAwardReceived -= CheckPrize;
         ChestMenuBehaviour.OnChargeGem -= UpdateGemAMount;
+        ShopManager.OnshopChangedGem -= UpdateGemAMount;
     }
 }

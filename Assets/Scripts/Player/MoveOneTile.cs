@@ -12,6 +12,8 @@ public class MoveOneTile : MonoBehaviour {
     public static event RetVoidArgInt OnPlayerWon;
     public static event RetVoidArgInt OnCameToTile;
     public static event RetVoidArgInt OnEncounteredChest;
+    public static event RetVoidArgInt OnPlayerMoveEnded;
+    
 
     [SerializeField] int endTileNum;
 
@@ -149,10 +151,14 @@ public class MoveOneTile : MonoBehaviour {
             else
             {
                 OnGamestateChanged(GameState.WaitingForDice);
+            //    OnPlayerMoveEnded(playerNum);
             }
         }
         else
+        {
             OnGamestateChanged(GameState.WaitingForDice);
+//            OnPlayerMoveEnded(playerNum);
+        }
     }
 
 

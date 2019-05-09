@@ -16,6 +16,7 @@ public class CoinUIManage : MonoBehaviour {
         DiceInfoSelect.OnCoinCharge += CoinAMountChange;
         DiceInfoUI.OnChargeCoin += CoinAMountChange;
         AwardGenerator.OnAwardReceived += CheckPrize;
+        ShopManager.OnShopChangedCoin += CoinAMountChange;
         coinText.text = coinamount.ToString();
     }
 
@@ -45,5 +46,6 @@ public class CoinUIManage : MonoBehaviour {
         DiceInfoSelect.OnCoinCharge -= CoinAMountChange;
         AwardGenerator.OnAwardReceived -= CheckPrize;
         DiceInfoUI.OnChargeCoin -= CoinAMountChange;
+        ShopManager.OnShopChangedCoin -= CoinAMountChange;
     }
 }

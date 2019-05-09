@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class ShopManager : MonoBehaviour {
 
+    public delegate void RetVoidArgInt(int amount);
+    public static event RetVoidArgInt OnShopChangedCoin;
+    public static event RetVoidArgInt OnshopChangedGem;
+        
+
 	// Use this for initialization
 	void Start () {
         CoinGetData.OnCoinPurchase += OnCoinPurchase;
@@ -14,8 +19,9 @@ public class ShopManager : MonoBehaviour {
         CoinObject coin = CoinObjectList.GetCoinInfo(coinID);
         if (PlayerPrefs.GetInt("Gem")>=coin.gemValue)
         {
-            PlayerPrefs.SetInt("Gem", PlayerPrefs.GetInt("Gem") - coin.gemValue);
-            PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin") + coin.coinValue);
+            OnShopChangedCoin(coin.coinValue);
+            OnshopChangedGem(-coin.gemValue);
+         
         }
     }
 

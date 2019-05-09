@@ -16,6 +16,7 @@ public class PlayerTurnReactor : MonoBehaviour {
 
     private void Awake()
     {
+      //  MoveOneTile.OnPlayerMoveEnded += CheckForTurn;
         GameTurnManager.OnPlayerChange += CheckForTurn;
         playerDice = GetComponent<PlayerDiceHolding>();
         playermove = GetComponent<MoveOneTile>();
@@ -53,6 +54,7 @@ public class PlayerTurnReactor : MonoBehaviour {
 
     private void OnDestroy()
     {
+       // MoveOneTile.OnPlayerMoveEnded -= CheckForTurn;
         GameTurnManager.OnPlayerChange -= CheckForTurn;
     }
 }
