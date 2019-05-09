@@ -23,7 +23,7 @@ public class ChestMenuPopop : MonoBehaviour {
     [SerializeField] GameObject menuPopup;
     //[SerializeField] Image chestImage;
     [SerializeField] Text remainingTimeText;
-    [SerializeField] Text gemToPay;
+
     [SerializeField] Text hourText;
   
     [SerializeField] GameObject GemOpen;
@@ -147,13 +147,16 @@ public class ChestMenuPopop : MonoBehaviour {
     void ActivateThisChestInOpening()
     {
         GemOpen.SetActive(true);
-        gemToPay.text = chestCollection.chestCollection[thisChest.chestID].gemToOpen.ToString();
+       
        
         remainingTimeText.enabled = true;
         remainingTimeText.color = Color.green;
         remainingTime = (thisChest.openOrderTimeInSystem + thisChest.openDuration) - System.DateTime.Now;
         remainingTimeText.text = persianPhrases[5]+remainingTime.Hours+":"+remainingTime.Minutes+":"+remainingTime.Seconds;
     }
+
+
+   
 
     void AChestReady()
     {
@@ -199,7 +202,7 @@ public class ChestMenuPopop : MonoBehaviour {
     void ActvateOtherChestInOpening()
     {
         GemOpen.SetActive( true);
-        gemToPay.text = chestCollection.chestCollection[thisChest.chestID].gemToOpen.ToString();
+       // gemToPay.text = chestCollection.chestCollection[thisChest.chestID].gemToOpen.ToString();
 
         remainingTimeText.enabled = true;
         remainingTimeText.color = Color.red;

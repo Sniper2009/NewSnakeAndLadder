@@ -11,7 +11,11 @@ public class ChestPopupUI : MonoBehaviour {
 
     public delegate void RetVoidArgVoid();
     public static event RetVoidArgVoid OnUnlockClicked;
-    public static event RetVoidArgVoid OnGemClicked;
+   
+
+
+    public delegate void RetVoidArgInt(int a);
+    public static event RetVoidArgInt OnGemClicked;
 
     [SerializeField] Image chestImage;
     [SerializeField] Text chestName;
@@ -19,6 +23,9 @@ public class ChestPopupUI : MonoBehaviour {
     [SerializeField] Text coinText;
     [SerializeField] Text totalDice;
     [SerializeField] List<string> persianPhrases;
+    [SerializeField] Text gemToPay;
+    [SerializeField] int minutePerGem;
+    [SerializeField] GameObject popupMenuPanel;
 
     private PersianMaker pm = new PersianMaker();
     [SerializeField] AwardGenerateData awardGenerate;
@@ -26,8 +33,9 @@ public class ChestPopupUI : MonoBehaviour {
 
     SaveableChest thisChest;
     int index;
+    int calculatedGem;
 
-  
+    System.TimeSpan remainingTime;
 
     void Awake()
     {
@@ -48,6 +56,19 @@ public class ChestPopupUI : MonoBehaviour {
     }
 
 
+
+    private void Update()
+    {
+        if(thisChest!=null && popupMenuPanel.activeSelf)
+        gemToPay.text = CalculateGemRemaining().ToString();
+    }
+
+    int CalculateGemRemaining()
+    {
+        remainingTime = (thisChest.openOrderTimeInSystem + thisChest.openDuration) - System.DateTime.Now;
+        calculatedGem = (remainingTime.Hours) * (60/minutePerGem) + remainingTime.Minutes / minutePerGem + 1;
+        return calculatedGem;
+    }
     public void UnlockClicked()
     {
         OnUnlockClicked();
@@ -55,7 +76,7 @@ public class ChestPopupUI : MonoBehaviour {
 
     public void GemClicked()
     {
-        OnGemClicked();
+        OnGemClicked(calculatedGem);
     }
     private void OnDestroy()
     {

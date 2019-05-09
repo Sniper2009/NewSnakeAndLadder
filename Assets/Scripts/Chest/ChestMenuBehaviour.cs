@@ -130,18 +130,18 @@ public class ChestMenuBehaviour : MonoBehaviour,IPointerDownHandler {
         }
     }
 
-    public void OnBuyWithGems()
+    public void OnBuyWithGems(int gemVal)
     {
         if (chestClickedOn)
         {
-            if (PlayerPrefs.GetInt("Gem") > chestCollection.chestCollection[thisChest.chestID].gemToOpen)//TODO change fixed
+            if (PlayerPrefs.GetInt("Gem") > gemVal)//TODO change fixed
             {
                 if(thisChest.chestState==ChestState.InOpening)
                 {
                     Debug.Log("gem bbbbbbbbbb");
                     InOpeningChestBought();
                 }
-                OnChargeGem(-chestCollection.chestCollection[thisChest.chestID].gemToOpen);
+                OnChargeGem(-gemVal);
                 thisChest.chestState = ChestState.Ready;
                 chestState = ChestState.Ready;
                 OnChestAssignedSingle(thisChest);

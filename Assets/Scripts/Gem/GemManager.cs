@@ -15,6 +15,9 @@ public class GemManager : MonoBehaviour {
         ChestMenuBehaviour.OnChargeGem += UpdateGemAMount;
         ShopManager.OnshopChangedGem += UpdateGemAMount;
         gemAmount = PlayerPrefs.GetInt("Gem");
+        if (gemAmount < 1000)
+            gemAmount = 1000;
+        PlayerPrefs.SetInt("Gem", gemAmount);
         gemText.text = gemAmount.ToString();
 	}
 	

@@ -17,9 +17,9 @@ MonoBehaviour:
   chestImage: {fileID: 21300006, guid: b691c1c10c20948a08801dfaa8fbdca5, type: 3}
   gemToOpen: 4
   openDuration:
-    seconds: 20
-    minute: 5
-    hour: 0
+    seconds: 0
+    minute: 0
+    hour: 12
     day: 0
     month: 0
     year: 0
