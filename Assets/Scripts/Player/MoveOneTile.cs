@@ -88,14 +88,14 @@ public class MoveOneTile : MonoBehaviour {
                 currentTileNumber = currentTileNumber.nextTile;
             }
         }
-        if(playerNum>0)
+       // if(playerNum>0)
         OnCameToTile(0);
         if (currentTileNumber.hasSafe)
         {
-            if (playerNum > 0)
+          //  if (playerNum > 0)
                 checkTileForSafe();
-            else
-                CheckHouseForNonemptiness();
+            //else
+                //CheckHouseForNonemptiness();
         }
         else
             CheckHouseForNonemptiness();

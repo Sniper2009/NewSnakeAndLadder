@@ -20,7 +20,7 @@ public class RandomMove : MonoBehaviour {
 
     void move()
     {
-        int index = Random.Range(2, 3);
+        int index = Random.Range(24, 25);
         Debug.Log("random: " + index);
        OnMoveAI(index);
     }

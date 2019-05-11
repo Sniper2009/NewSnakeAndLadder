@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class CoinCollection : MonoBehaviour {
 
-    [SerializeField] Text currentPlayerCoin;
+    [SerializeField]List< Text> currentPlayerCoin;
 
     public delegate void RetVoidArgInt(int num);
     public static event RetVoidArgInt OnPickedUpCoin;
@@ -14,7 +14,7 @@ public class CoinCollection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         MoveOneTile.OnCameToTile += CheckforCoin;
-        PlayerTurnReactor.OnPlayerDiceChange += ChangeCoinUI;
+      //  PlayerTurnReactor.OnPlayerDiceChange += ChangeCoinUI;
 	}
 	
     void CheckforCoin(int dummy)
@@ -25,21 +25,21 @@ public class CoinCollection : MonoBehaviour {
         {
             playersCoin[PlayerTurnReactor.currentPlayerTurn] += incomingTile.coinAmount;
             OnPickedUpCoin(incomingTile.tileNum);
-            currentPlayerCoin.text = playersCoin[PlayerTurnReactor.currentPlayerTurn].ToString();
+            currentPlayerCoin[PlayerTurnReactor.currentPlayerTurn].text = playersCoin[PlayerTurnReactor.currentPlayerTurn].ToString();
         }
     }
 
 
-    void ChangeCoinUI(int dummy)
-    {
-        currentPlayerCoin.text = playersCoin[PlayerTurnReactor.currentPlayerTurn].ToString();
-    }
+    //void ChangeCoinUI(int dummy)
+    //{
+    //    currentPlayerCoin.text = playersCoin[PlayerTurnReactor.currentPlayerTurn].ToString();
+    //}
 
 
 
     private void OnDestroy()
     {
         MoveOneTile.OnCameToTile -= CheckforCoin;
-        PlayerTurnReactor.OnPlayerDiceChange -= ChangeCoinUI;
+      //  PlayerTurnReactor.OnPlayerDiceChange -= ChangeCoinUI;
     }
 }
