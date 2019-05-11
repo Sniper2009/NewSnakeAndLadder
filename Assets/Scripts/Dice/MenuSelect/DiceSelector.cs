@@ -56,6 +56,7 @@ public class DiceSelector : MonoBehaviour,IPointerDownHandler {
             }
             else
             {
+                diceImage.enabled = true;
                 diceDesignObject.SetActive(true);
                 diceDesignApply.ChangeID(diceID);
                 hasDice = true;

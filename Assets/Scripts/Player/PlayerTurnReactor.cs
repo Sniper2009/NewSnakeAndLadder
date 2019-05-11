@@ -6,26 +6,33 @@ public class PlayerTurnReactor : MonoBehaviour {
 
     public delegate void RetVoidArgVoid();
     public static event RetVoidArgVoid OnAIMove;
+
+    public delegate void RetVoidArgInt(int i);
+    public static event RetVoidArgInt OnPlayerDiceChange;
+
     MoveOneTile playermove;
     PlayerDiceHolding playerDice;
     
 
     [SerializeField] int playerID;
 
-
+   
+    public static MoveOneTile currentPlayer;
+    public static int currentPlayerTurn;
 
     private void Awake()
     {
       //  MoveOneTile.OnPlayerMoveEnded += CheckForTurn;
-        GameTurnManager.OnPlayerChange += CheckForTurn;
+        MoveOneTile.OnGamestateChanged += CheckForTurn;
         playerDice = GetComponent<PlayerDiceHolding>();
         playermove = GetComponent<MoveOneTile>();
+        CheckForTurn(0);
     }
     // Use this for initialization
     void CheckForTurn(int ID)
     {
-      
-        if(ID!=playerID)
+        Debug.Log("trn to check:  " + ID);
+        if(ID==playerID)
         {
             if (playerDice != null)
                 playerDice.enabled = false;
@@ -37,7 +44,11 @@ public class PlayerTurnReactor : MonoBehaviour {
             if (playerDice != null)
                 playerDice.enabled = true;
             playermove.enabled = true;
-            if (ID == 0)
+            currentPlayer = GetComponent<MoveOneTile>();
+            currentPlayerTurn = playerID;
+            if(OnPlayerDiceChange!=null)
+            OnPlayerDiceChange(DiceSelect.playerDice);
+            if (playerID == 0)
                 StartCoroutine(EventWithDelay());
         }
 //        Debug.Log("turn:  " + ID+"   "+name);
@@ -47,14 +58,14 @@ public class PlayerTurnReactor : MonoBehaviour {
 
     IEnumerator EventWithDelay()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
         OnAIMove();
 
     }
 
     private void OnDestroy()
     {
-       // MoveOneTile.OnPlayerMoveEnded -= CheckForTurn;
-        GameTurnManager.OnPlayerChange -= CheckForTurn;
+        // MoveOneTile.OnPlayerMoveEnded -= CheckForTurn;
+        MoveOneTile.OnGamestateChanged -= CheckForTurn;
     }
 }

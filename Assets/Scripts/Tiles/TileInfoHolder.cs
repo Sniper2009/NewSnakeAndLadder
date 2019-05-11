@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 
 
 public class TileInfoHolder : MonoBehaviour {
+    [SerializeField] Text tileTextNum;
 
      public TileInfoHolder nextTile;
     public Vector3 thisTilePos;
@@ -31,6 +33,7 @@ public class TileInfoHolder : MonoBehaviour {
         string thisName = name.Split('e')[1];
        // nextTile = transform.parent.GetChild(transform.GetSiblingIndex() + 1).GetComponent<TileInfoHolder>();
         tileNum = System.Convert.ToInt32(thisName);
+        tileTextNum.text = tileNum.ToString();
         string nextName = "Tile" + (tileNum + 1).ToString();
         if(GameObject.Find(nextName)==null)
         {

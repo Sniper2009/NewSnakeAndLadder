@@ -58,12 +58,25 @@ public class DiceSelectedUI : MonoBehaviour {
 
     void AssignDice(SaveableDice newDice)
     {
+        if(newDice==null)
+        {
+            Debug.Log("newww nulll");
+            enableInfo = false;
+            thisDice = null;
+            for (int i = 0; i < childnum; i++)
+            {
+                transform.GetChild(i).gameObject.SetActive(false);
+            }
+            designApplyObject.SetActive(false);
+            return;
+        }
         enableInfo = true;
         thisDice = newDice;
         for (int i = 0; i < childnum; i++)
         {
             transform.GetChild(i).gameObject.SetActive(true);
         }
+
       //  GetComponent<Image>().enabled = true;
         DisplayDiceInfo();
     }

@@ -44,7 +44,7 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
     {
         DiceUIMenu.OnDiceSelected += OnDiceSelected;
         DiceUIMenu.OnDiceClicked += TurnSlotOff;
-
+        DiceInfoSelect.OnUpdateDice += EmptySlot;
 
         PlayerPrefs.SetInt("diceSelect_" + slotID, 0);
 
@@ -79,6 +79,18 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
         currentDiceInMenuSelected = dice;
         borderImage.enabled = true;
         canTakeDice = true;
+    }
+
+    void EmptySlot(SaveableDice dice)
+    {
+        if (currentDice!=null&& dice.diceID == currentDice.diceID)
+        {
+            currentDice = null;
+            backgroundImage.sprite = emptySlot;
+            OnDiscardDice(dice);
+            OnDiceAssigned(currentDice);
+        }
+
     }
 
     void AssignDice(SaveableDice dice)
@@ -119,6 +131,7 @@ public class DiceSlotSelect : MonoBehaviour,IPointerDownHandler {
         OnTurnBorderOff -= TurnSlotOff;
         DiceUIMenu.OnDiceSelected -= OnDiceSelected;
         DiceUIMenu.OnDiceClicked -= TurnSlotOff;
+        DiceInfoSelect.OnUpdateDice -= EmptySlot;
 
     }
 

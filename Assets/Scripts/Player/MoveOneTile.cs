@@ -5,7 +5,7 @@ using UnityEngine;
 public class MoveOneTile : MonoBehaviour {
 
     public delegate void RetVoidArgGamestate(GameState state);
-    public static event RetVoidArgGamestate OnGamestateChanged;
+
 
     public delegate void RetVoidArgInt(int state);
     public event RetVoidArgInt OnEndMoveEvent;
@@ -13,7 +13,9 @@ public class MoveOneTile : MonoBehaviour {
     public static event RetVoidArgInt OnCameToTile;
     public static event RetVoidArgInt OnEncounteredChest;
     public static event RetVoidArgInt OnPlayerMoveEnded;
-    
+
+    public static event RetVoidArgInt OnGamestateChanged;
+
 
     [SerializeField] int endTileNum;
 
@@ -46,7 +48,7 @@ public class MoveOneTile : MonoBehaviour {
 
     void MakeMove(int num)
     {
-        OnGamestateChanged(GameState.PlayerMoving);
+      //  OnGamestateChanged(0);
         StartCoroutine(LerpObject(num));
 
     }
@@ -135,7 +137,7 @@ public class MoveOneTile : MonoBehaviour {
 
     void EndMoveAfterInteract(int dummy)
     {
-        OnGamestateChanged(GameState.WaitingForDice);
+        OnGamestateChanged(playerNum);
     }
     void EndPlayerMove()
     {
@@ -151,13 +153,13 @@ public class MoveOneTile : MonoBehaviour {
             }
             else
             {
-                OnGamestateChanged(GameState.WaitingForDice);
+                OnGamestateChanged(playerNum);
             //    OnPlayerMoveEnded(playerNum);
             }
         }
         else
         {
-            OnGamestateChanged(GameState.WaitingForDice);
+            OnGamestateChanged(playerNum);
 //            OnPlayerMoveEnded(playerNum);
         }
     }

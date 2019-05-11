@@ -18,7 +18,7 @@ public class DiceSelect : MonoBehaviour {
     public static event RetVoidArgInt OnDiceUpdate;
 	// Use this for initialization
 	void Start () {
-        GameTurnManager.OnPlayerDiceChange += CheckPlayerDice;
+        PlayerTurnReactor.OnPlayerDiceChange += CheckPlayerDice;
       //  diceSelectPanel.SetActive(false);
         DiceSelector.OnDiceSelected += UpdateDice;
 	}
@@ -81,7 +81,7 @@ public class DiceSelect : MonoBehaviour {
 
     private void OnDestroy()
     {
-        GameTurnManager.OnPlayerDiceChange -= CheckPlayerDice;
+        PlayerTurnReactor.OnPlayerDiceChange -= CheckPlayerDice;
         DiceSelector.OnDiceSelected -= UpdateDice;
     }
 }

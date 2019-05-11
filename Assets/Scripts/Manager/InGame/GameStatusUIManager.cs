@@ -17,33 +17,28 @@ public class GameStatusUIManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        MoveOneTile.OnGamestateChanged += RespondToGameStateChange;
+        LocalPlayerEventAnnounce.OtherPlayerMoveEnded += RespondToOtherPlayerDone;
+        DiceMechanism.OnDiceRolled += RespondToDiceRole;
         //GameTurnManager.OnPlayerChange+=
         gameState = GameState.WaitingForDice;
-        RespondToGameStateChange(gameState);
+        RespondToOtherPlayerDone();
 	}
 	
 
     
 
-    void RespondToGameStateChange(GameState newState)
+    void RespondToOtherPlayerDone()
     {
-        if(newState==GameState.WaitingForDice)
-        {
-            Dice.SetActive(true);
-            stateText.text = "Roll the dice";
-        }
+        Dice.SetActive(true);
+    }
 
-        if (newState==GameState.PlayerMoving||newState==GameState.WaitingForOther)
-        {
-            Dice.SetActive(false);
-            stateText.text = "Player is Moving";
-        }
-        gameState = newState;
+    void RespondToDiceRole(int dummy)
+    {
+        Dice.SetActive(false);
     }
 
     private void OnDestroy()
     {
-        MoveOneTile.OnGamestateChanged -= RespondToGameStateChange;
+        LocalPlayerEventAnnounce.OtherPlayerMoveEnded -= RespondToOtherPlayerDone;
     }
 }

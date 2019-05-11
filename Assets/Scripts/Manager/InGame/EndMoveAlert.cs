@@ -31,7 +31,7 @@ public class EndMoveAlert : MonoBehaviour {
     }
 
 
-    void ResetAlert(GameState state)
+    void ResetAlert(int x)
     {
         endMoveAlertText.text = "";
     }

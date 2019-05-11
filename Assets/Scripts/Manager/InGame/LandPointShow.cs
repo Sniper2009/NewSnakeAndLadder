@@ -32,30 +32,29 @@ public class LandPointShow : MonoBehaviour {
 
     private void Start()
     {
-        MoveOneTile.OnGamestateChanged += WaitingForDiceRoll;
-        MoveOneTile.OnGamestateChanged += DiceRollHappened;
+        DiceMechanism.OnDiceRolled += DiceRollHappened;
+        LocalPlayerEventAnnounce.OtherPlayerMoveEnded += WaitingForDiceRoll;
 
         DiceSelector.OnDiceNumbers += DisplayPointers;
-        locationCurrentTile = GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;
-        if(GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>()!=null)
-        DisplayPointers(diceCollection.diceFullDesigns[GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
+        locationCurrentTile = PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;
+        if(PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>()!=null)
+        DisplayPointers(diceCollection.diceFullDesigns[PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
     }
 
 
-    void WaitingForDiceRoll(GameState state)
+    void WaitingForDiceRoll()
     {
-        if (state == GameState.WaitingForDice)
-        {
-            if(GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>() != null)
-            DisplayPointers(diceCollection.diceFullDesigns[ GameTurnManager.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
-        }
+
+            if(PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>() != null)
+            DisplayPointers(diceCollection.diceFullDesigns[ PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
+        
     }
 
 
     void DisplayPointers(List<int>diceNumbers)
     {
         List<int> diceNums = diceNumbers.OfType<int>().ToList();
-        locationCurrentTile = GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;
+        locationCurrentTile = PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;
         for (int i = 0; i < tileToShow; i++)
         {
             
@@ -77,23 +76,22 @@ public class LandPointShow : MonoBehaviour {
     }
 
 
-    void DiceRollHappened(GameState state)
+    void DiceRollHappened(int x)
     {
-        if (state == GameState.PlayerMoving)
-        {
+
             foreach (var item in instantiatedPoints)
             {
                 item.transform.SetParent(board, false);
                 item.SetActive(false);
             }
-        }
+        
     }
 
 
     private void OnDestroy()
     {
-        MoveOneTile.OnGamestateChanged -= WaitingForDiceRoll;
-        MoveOneTile.OnGamestateChanged -= DiceRollHappened;
+        DiceMechanism.OnDiceRolled += DiceRollHappened;
+        LocalPlayerEventAnnounce.OtherPlayerMoveEnded += WaitingForDiceRoll;
         DiceSelector.OnDiceNumbers -= DisplayPointers;
     }
 }

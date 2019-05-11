@@ -14,25 +14,25 @@ public class CoinCollection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         MoveOneTile.OnCameToTile += CheckforCoin;
-        GameTurnManager.OnPlayerDiceChange += ChangeCoinUI;
+        PlayerTurnReactor.OnPlayerDiceChange += ChangeCoinUI;
 	}
 	
     void CheckforCoin(int dummy)
     {
 //        Debug.Log("turn:  " + GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile);
-        TileInfoHolder incomingTile = GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber;
+        TileInfoHolder incomingTile = PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber;
         if (incomingTile.hasCoin)
         {
-            playersCoin[GameTurnManager.playerTurn] += incomingTile.coinAmount;
+            playersCoin[PlayerTurnReactor.currentPlayerTurn] += incomingTile.coinAmount;
             OnPickedUpCoin(incomingTile.tileNum);
-            currentPlayerCoin.text = playersCoin[GameTurnManager.playerTurn].ToString();
+            currentPlayerCoin.text = playersCoin[PlayerTurnReactor.currentPlayerTurn].ToString();
         }
     }
 
 
     void ChangeCoinUI(int dummy)
     {
-        currentPlayerCoin.text = playersCoin[GameTurnManager.playerTurn].ToString();
+        currentPlayerCoin.text = playersCoin[PlayerTurnReactor.currentPlayerTurn].ToString();
     }
 
 
@@ -40,6 +40,6 @@ public class CoinCollection : MonoBehaviour {
     private void OnDestroy()
     {
         MoveOneTile.OnCameToTile -= CheckforCoin;
-        GameTurnManager.OnPlayerDiceChange -= ChangeCoinUI;
+        PlayerTurnReactor.OnPlayerDiceChange -= ChangeCoinUI;
     }
 }
