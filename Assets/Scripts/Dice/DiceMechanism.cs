@@ -16,6 +16,8 @@ public class DiceMechanism : MonoBehaviour {
     [SerializeField] DiceDesignCollection diceDesignCollection;
     [SerializeField] Image resultOutput;
     [SerializeField] Image diceBackGround;
+
+    [SerializeField] GameObject diceObject;
     int currentDiceID;
     int prevResult = 0;
     List<int> diceNumbers;
@@ -49,10 +51,19 @@ public class DiceMechanism : MonoBehaviour {
         diceBackGround.color= diceDesignCollection.diceFullDesigns[currentDiceID].color;
         if(result<=6)
         resultOutput.sprite = diceDesignCollection.resultSprite[result];
+        StartCoroutine(ShowDiceResult());
         OnDiceRolled(result);
         if(OnDiceNumberCharged!=null)
         OnDiceNumberCharged(currentDiceID);
 
+    }
+
+    IEnumerator ShowDiceResult()
+    {
+        diceObject.SetActive(true);
+
+        yield return new WaitForSeconds(2);
+        diceObject.SetActive(false);
     }
 
 
