@@ -14,12 +14,14 @@ public class CoinCollection : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         MoveOneTile.OnCameToTile += CheckforCoin;
-      //  PlayerTurnReactor.OnPlayerDiceChange += ChangeCoinUI;
-	}
+        MoveBackwards.OnCameToTile += CheckforCoin;
+        PlayerTurnReactor.OnGiveTakeCoin += GetCurrentCoins;
+        //  PlayerTurnReactor.OnPlayerDiceChange += ChangeCoinUI;
+    }
 	
     void CheckforCoin(int dummy)
     {
-//        Debug.Log("turn:  " + GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile);
+        Debug.Log("turn:  " + PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile);
         TileInfoHolder incomingTile = PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber;
         if (incomingTile.hasCoin)
         {
@@ -27,6 +29,18 @@ public class CoinCollection : MonoBehaviour {
             OnPickedUpCoin(incomingTile.tileNum);
             currentPlayerCoin[PlayerTurnReactor.currentPlayerTurn].text = playersCoin[PlayerTurnReactor.currentPlayerTurn].ToString();
         }
+    }
+
+
+    void GetCurrentCoins(int givingID, int takingID)
+    {
+        Debug.Log(" before coin:  " + takingID + "   " + givingID);
+        playersCoin[takingID] += playersCoin[givingID];
+
+        playersCoin[givingID] = 0;
+        Debug.Log(" after coin:  " + givingID + "   " + currentPlayerCoin[takingID].name+"   "+currentPlayerCoin[givingID].name);
+        currentPlayerCoin[takingID].text = playersCoin[takingID].ToString();
+        currentPlayerCoin[givingID].text = playersCoin[givingID].ToString();
     }
 
 
@@ -40,6 +54,8 @@ public class CoinCollection : MonoBehaviour {
     private void OnDestroy()
     {
         MoveOneTile.OnCameToTile -= CheckforCoin;
-      //  PlayerTurnReactor.OnPlayerDiceChange -= ChangeCoinUI;
+        MoveBackwards.OnCameToTile -= CheckforCoin;
+        PlayerTurnReactor.OnGiveTakeCoin -= GetCurrentCoins;
+        //  PlayerTurnReactor.OnPlayerDiceChange -= ChangeCoinUI;
     }
 }

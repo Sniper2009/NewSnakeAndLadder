@@ -14,6 +14,7 @@ public class MoveOneTile : MonoBehaviour {
     public static event RetVoidArgInt OnEncounteredChest;
     public static event RetVoidArgInt OnPlayerMoveEnded;
 
+
     public static event RetVoidArgInt OnGamestateChanged;
 
 
@@ -32,18 +33,23 @@ public class MoveOneTile : MonoBehaviour {
 
     private void Start()
     {
+        if (GetComponent<PlayerMoveSync>() != null)
+            GetComponent<PlayerMoveSync>().OnDiceRolled += MakeMove;
         Debug.Log("start: ");
         GetComponent<PlayerEndMoveAction>().OnEndMoveDone += EndPlayerMove;
         rectTransform = GetComponent<RectTransform>();
+
      //   DiceMechanism.OnDiceRolled += MakeMove;
     }
 
     private void OnEnable()
     {
+        PlayerTurnReactor.OnMoveForward += MakeMove;
         DiceMechanism.OnDiceRolled += MakeMove;
         if(playerNum==0)
         RandomMove.OnMoveAI += MakeMove;
         SafePickup.OnSafeInteractionDone += EndMoveAfterInteract;
+        
     }
 
     void MakeMove(int num)
@@ -88,7 +94,8 @@ public class MoveOneTile : MonoBehaviour {
                 currentTileNumber = currentTileNumber.nextTile;
             }
         }
-       // if(playerNum>0)
+   
+        // if(playerNum>0)
         OnCameToTile(0);
         if (currentTileNumber.hasSafe)
         {
@@ -116,7 +123,8 @@ public class MoveOneTile : MonoBehaviour {
 
     void CheckHouseForNonemptiness()
     {
-        if(currentTileNumber.isSnakeHead)
+        Debug.Log("ending: " + playerNum);
+        if (currentTileNumber.isSnakeHead)
         {
 
             OnEndMoveEvent(0);
@@ -137,13 +145,13 @@ public class MoveOneTile : MonoBehaviour {
 
     void EndMoveAfterInteract(int dummy)
     {
+        Debug.Log("ending: " + playerNum);
         OnGamestateChanged(playerNum);
     }
     void EndPlayerMove()
     {
         Debug.Log("ending: " + playerNum);
-        if (playerNum > 0)
-        {
+      
             if (currentTileNumber.hasSafe || currentTileNumber.hasCoin)
             {
                 OnCameToTile(0);
@@ -156,12 +164,8 @@ public class MoveOneTile : MonoBehaviour {
                 OnGamestateChanged(playerNum);
             //    OnPlayerMoveEnded(playerNum);
             }
-        }
-        else
-        {
-            OnGamestateChanged(playerNum);
-//            OnPlayerMoveEnded(playerNum);
-        }
+        
+       
     }
 
 
@@ -173,6 +177,7 @@ public class MoveOneTile : MonoBehaviour {
         SafePickup.OnSafeInteractionDone -= EndMoveAfterInteract;
         DiceMechanism.OnDiceRolled -= MakeMove;
         RandomMove.OnMoveAI -= MakeMove;
+        PlayerTurnReactor.OnMoveForward -= MakeMove;
     }
     private void OnDestroy()
     {
@@ -180,5 +185,8 @@ public class MoveOneTile : MonoBehaviour {
         DiceMechanism.OnDiceRolled -= MakeMove;
         SafePickup.OnSafeInteractionDone -= EndMoveAfterInteract;
         RandomMove.OnMoveAI -= MakeMove;
+        if (GetComponent<PlayerMoveSync>() != null)
+            GetComponent<PlayerMoveSync>().OnDiceRolled -= MakeMove;
+        PlayerTurnReactor.OnMoveForward -= MakeMove;
     }
 }

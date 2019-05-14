@@ -25,12 +25,14 @@ public class SafePickup : MonoBehaviour {
     int safeTile;
 	// Use this for initialization
 	void Start () {
-        PlayerTurnReactor.OnPlayerDiceChange += DisplaySafeUpdate;
+      //  PlayerTurnReactor.OnPlayerDiceChange += DisplaySafeUpdate;
         MoveOneTile.OnEncounteredChest += OnSafePickupClicked;
+        MoveBackwards.OnEncounteredChest += OnSafePickupClicked;
 	}
 	
 	public void DisplaySafeUpdate(int playerTurn)
     {
+        Debug.Log("in display update:  " + playerTurn + "    " + playerSafeID);
         //if (PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>() == null)
         //return;
         if (playerSafeID[playerTurn] > 0)
@@ -44,8 +46,9 @@ public class SafePickup : MonoBehaviour {
 
     public void UpdatePlayerSafe(int safeID)
     {
-
+        
         playerSafeID[PlayerTurnReactor.currentPlayerTurn] = safeID;
+        
        // playersSafeType[GameTurnManager.playerTurn] = safeNum;
     }
 
@@ -59,7 +62,7 @@ public class SafePickup : MonoBehaviour {
         //restorePrevious one
        // int safeType = chestCollection.chestCollection[playersSafeType[GameTurnManager.playerTurn]].safeType;
         int safeID = chestCollection.chestCollection[playerSafeID[PlayerTurnReactor.currentPlayerTurn]].chestID;
-
+        Debug.Log("restore:  " + PlayerTurnReactor.currentPlayer.playerNum);
         OnRestoreSafe(safeID, PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.transform);
        // Debug.Log("tilenum:  " + tileNum+"   "+safeID+"   "+safeType);
         //add new one
@@ -70,7 +73,7 @@ public class SafePickup : MonoBehaviour {
            PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.GetComponent<TileInfoHolder>().hasSafe = true;
         }
         //  safeType = GameTurnManager.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.safeType;
-        Debug.Log("current tile: " + PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.safeID);
+        Debug.Log("current tile: " + PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.safeID+"    "+PlayerTurnReactor.currentPlayerTurn);
         safeID = PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.safeID;
       //  OnRestoreSafe(safeType, safeID,);
         UpdatePlayerSafe(safeID);
@@ -93,5 +96,6 @@ public class SafePickup : MonoBehaviour {
     {
         PlayerTurnReactor.OnPlayerDiceChange -= DisplaySafeUpdate;
         MoveOneTile.OnEncounteredChest -= OnSafePickupClicked;
+        MoveBackwards.OnEncounteredChest -= OnSafePickupClicked;
     }
 }

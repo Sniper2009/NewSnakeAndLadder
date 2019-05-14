@@ -24,7 +24,7 @@ public class EndGamePlayerDisplay : MonoBehaviour {
         EndGameAnnounce.OnEndPanelActive += DisplayUIData;
     }
 
-    void DisplayUIData()
+    void DisplayUIData(int winnerNum)
     {
         Debug.Log("ui:  " + playerNum);
         if (CoinCollection.playersCoin[playerNum] > 0)
@@ -49,7 +49,7 @@ public class EndGamePlayerDisplay : MonoBehaviour {
       
         ChestData cData = chestCollection.chestCollection[SafePickup.playerSafeID[0]];
         SaveableChest newChest = new SaveableChest(cData.chestID, ChestState.Closed, System.DateTime.Now, cData.openDuration,cData.chestType);
-        if(playerNum>0)
+        if(playerNum==winnerNum && playerNum>0 && cData.chestID>0)
         OnAddChest(newChest);
     }
 

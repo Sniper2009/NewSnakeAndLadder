@@ -105,6 +105,7 @@ public class ChestSaver : SaveableItem {
         foreach (var chest in userChests)
         {
             SaveableChest nChest = new SaveableChest(chest.chestID, chest.chestState, chest.openOrderTimeSaveable, chest.openDurationSaveable,chest.chestType);
+            if(OnNewChest!=null)
             OnNewChest(nChest);
         }
     }

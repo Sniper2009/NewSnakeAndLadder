@@ -13,11 +13,14 @@ public class PlayerEndMoveAction : MonoBehaviour {
     float normalizedValue;
     RectTransform rectTransform;
     MoveOneTile thisPlayerMove;
+    MoveBackwards thisPlayerBack;
     // Use this for initialization
     void Start () {
+        thisPlayerBack = GetComponent<MoveBackwards>();
         rectTransform = GetComponent<RectTransform>();
         thisPlayerMove = GetComponent<MoveOneTile>();
         thisPlayerMove.OnEndMoveEvent += ReactToEndMove;
+        thisPlayerBack.OnEndMoveEvent += ReactToEndMove;
 	}
 
 
@@ -70,5 +73,6 @@ public class PlayerEndMoveAction : MonoBehaviour {
     private void OnDestroy()
     {
         GetComponent<MoveOneTile>().OnEndMoveEvent -= ReactToEndMove;
+        thisPlayerBack.OnEndMoveEvent -= ReactToEndMove;
     }
 }

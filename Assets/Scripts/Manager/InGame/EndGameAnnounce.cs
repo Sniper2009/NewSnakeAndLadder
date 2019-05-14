@@ -8,8 +8,8 @@ public class EndGameAnnounce : MonoBehaviour {
     [SerializeField] GameObject endGamePanel;
     Text endGameAnnounement;
 
-    public delegate void RetVoidArgVoid();
-    public static event RetVoidArgVoid OnEndPanelActive;
+    public delegate void RetVoidArgInt(int i);
+    public static event RetVoidArgInt OnEndPanelActive;
    // public static event RetVoidArgVoid On
 
 	// Use this for initialization
@@ -23,7 +23,7 @@ public class EndGameAnnounce : MonoBehaviour {
     {
         endGameAnnounement.text = "Player " +( playerNum+1).ToString() + " won the game!!";
         endGamePanel.SetActive(true);
-        OnEndPanelActive();
+        OnEndPanelActive(playerNum);
     }
 
     public void OnRetryClicked()

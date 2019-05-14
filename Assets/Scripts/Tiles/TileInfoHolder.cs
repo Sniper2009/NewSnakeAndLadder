@@ -9,6 +9,7 @@ public class TileInfoHolder : MonoBehaviour {
     [SerializeField] Text tileTextNum;
 
      public TileInfoHolder nextTile;
+    public TileInfoHolder prevTile;
     public Vector3 thisTilePos;
     public Vector2 thisTileMinAnchor;
     public Vector2 thisTileMaxAnchor;
@@ -35,6 +36,10 @@ public class TileInfoHolder : MonoBehaviour {
         tileNum = System.Convert.ToInt32(thisName);
         tileTextNum.text = tileNum.ToString();
         string nextName = "Tile" + (tileNum + 1).ToString();
+        string prevName = "Tile" + (tileNum - 1).ToString();
+        if (tileNum - 1 < 1)
+            prevName = "Tile1";
+        prevTile = GameObject.Find(prevName).GetComponent<TileInfoHolder>();
         if(GameObject.Find(nextName)==null)
         {
             Debug.Log("null: " + name + "    " + nextName);
@@ -42,6 +47,7 @@ public class TileInfoHolder : MonoBehaviour {
         }
         else
          nextTile = GameObject.Find(nextName).GetComponent<TileInfoHolder>();
+
         //tileNum = transform.GetSiblingIndex() ;//start at 1 
         thisTilePos = GetComponent<RectTransform>().anchoredPosition;// + new Vector2(80, 0);
         thisTileMinAnchor = GetComponent<RectTransform>().anchorMin;
@@ -106,7 +112,7 @@ public class TileInfoHolder : MonoBehaviour {
 
     public void OnSafeRestore(int ID,Transform newSafe)
     {
-        //Debug.Log("typeID:  " + type + "  " + ID);
+    
         if(safeID==ID&&goodsChild!=null)
         {
             goodsChild.transform.SetParent(newSafe, false);
