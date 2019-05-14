@@ -57,7 +57,10 @@ public class DiceMechanism : MonoBehaviour {
         if(result<=6)
         resultOutput.sprite = diceDesignCollection.resultSprite[result];
         StartCoroutine(ShowDiceResult());
-  
+
+        if (OnDiceNumberCharged != null)
+            OnDiceNumberCharged(currentDiceID);
+
         if (diceDesignCollection.diceFullDesigns[currentDiceID].diceRareness == DiceRareness.Talisman)
         {
             OnTalismanDiceRolled(result,PlayerTurnReactor.currentPlayer.playerNum);
@@ -70,8 +73,7 @@ public class DiceMechanism : MonoBehaviour {
             OnDiceRolled(result);
          
         }
-        if (OnDiceNumberCharged != null)
-            OnDiceNumberCharged(currentDiceID);
+  
 
     }
 

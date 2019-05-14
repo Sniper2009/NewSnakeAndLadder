@@ -2372,37 +2372,6 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 114908175948918972, guid: 5bc5075832b5a4fd0b0d7f7ac0db1a03,
-        type: 2}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114619902702271960, guid: 5bc5075832b5a4fd0b0d7f7ac0db1a03,
-        type: 2}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300050, guid: 9e2eff32482dc401c9285a2e08265667,
-        type: 3}
-    - target: {fileID: 224817888638800306, guid: 5bc5075832b5a4fd0b0d7f7ac0db1a03,
-        type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 224817888638800306, guid: 5bc5075832b5a4fd0b0d7f7ac0db1a03,
-        type: 2}
-      propertyPath: m_LocalScale.x
-      value: 1.1392
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005923263326912, guid: 5bc5075832b5a4fd0b0d7f7ac0db1a03,
-        type: 2}
-      propertyPath: m_AnchoredPosition.y
-      value: -31.7
-      objectReference: {fileID: 0}
-    - target: {fileID: 224005923263326912, guid: 5bc5075832b5a4fd0b0d7f7ac0db1a03,
-        type: 2}
-      propertyPath: m_SizeDelta.y
-      value: 31.7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5bc5075832b5a4fd0b0d7f7ac0db1a03, type: 2}
   m_IsPrefabAsset: 0

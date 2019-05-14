@@ -34,6 +34,8 @@ public class EndGamePlayerDisplay : MonoBehaviour {
             coinAmount.text = CoinCollection.playersCoin[playerNum].ToString();
             PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin") + CoinCollection.playersCoin[0]);
         }
+        if (playerNum != winnerNum)
+            return;
         if (SafePickup.playerSafeID[0] > 0)
         {
             safeImage.enabled = true;
