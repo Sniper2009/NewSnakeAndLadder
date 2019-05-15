@@ -4,16 +4,20 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MenuNavigateManager : MonoBehaviour {
-
-public void OnStartGame()
+    private void Awake()
+    {
+        Screen.SetResolution(900, 1600,false);
+  
+    }
+    public void OnStartGame()
     {
         SceneManager.LoadScene(1);
     }
 
 
-    public void DiceMenu()
+    public void Multiplayer()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
 

@@ -28,6 +28,7 @@ public class MoveOneTile : MonoBehaviour {
   
     RectTransform rectTransform;
     bool isMoving=false;
+    PlayerMoveSync moveSync;
 
     public TileInfoHolder currentTileNumber;
 
@@ -38,7 +39,8 @@ public class MoveOneTile : MonoBehaviour {
         Debug.Log("start: ");
         GetComponent<PlayerEndMoveAction>().OnEndMoveDone += EndPlayerMove;
         rectTransform = GetComponent<RectTransform>();
-
+        currentTileNumber = GameObject.Find("InitialTile").GetComponent<TileInfoHolder>();
+        moveSync = GetComponent<PlayerMoveSync>();
      //   DiceMechanism.OnDiceRolled += MakeMove;
     }
 
@@ -54,6 +56,9 @@ public class MoveOneTile : MonoBehaviour {
 
     void MakeMove(int num)
     {
+        Debug.Log("start move:  " + moveSync.playerID);
+        if (moveSync != null)
+            playerNum = moveSync.playerID;
       //  OnGamestateChanged(0);
         StartCoroutine(LerpObject(num));
 

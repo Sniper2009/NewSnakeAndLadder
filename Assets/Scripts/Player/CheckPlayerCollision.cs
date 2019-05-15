@@ -14,7 +14,7 @@ public class CheckPlayerCollision : MonoBehaviour {
 	
 	void checkCollision(int ID)
     {
-        Debug.Log("check collision:  "+ PlayerTurnReactor.currentPlayer.currentTileNumber + "    "+ PlayerTurnReactor.otherPlayer.currentTileNumber);
+        Debug.Log("check collision:  "+ PlayerTurnReactor.currentPlayer + " nnnn  "+ PlayerTurnReactor.otherPlayer);
         if(PlayerTurnReactor.currentPlayer.currentTileNumber==PlayerTurnReactor.otherPlayer.currentTileNumber)
         {
             OnPlayersCollided(ID);

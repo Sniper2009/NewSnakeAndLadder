@@ -19,6 +19,8 @@ public class GameStatusUIManager : MonoBehaviour {
 	void Start () {
         LocalPlayerEventAnnounce.OtherPlayerMoveEnded += RespondToOtherPlayerDone;
         DiceMechanism.OnDiceRolled += RespondToDiceRole;
+        PlayerMoveSync.OnActivateDice += RespondToOtherPlayerDone;
+        PlayerMoveSync.OnDeactivateDice += RespondToDiceRole;
         //GameTurnManager.OnPlayerChange+=
         gameState = GameState.WaitingForDice;
         RespondToOtherPlayerDone();
@@ -40,5 +42,7 @@ public class GameStatusUIManager : MonoBehaviour {
     private void OnDestroy()
     {
         LocalPlayerEventAnnounce.OtherPlayerMoveEnded -= RespondToOtherPlayerDone;
+        PlayerMoveSync.OnActivateDice -= RespondToOtherPlayerDone;
+        PlayerMoveSync.OnDeactivateDice -= RespondToDiceRole;
     }
 }

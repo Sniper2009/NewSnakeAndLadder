@@ -9,6 +9,8 @@ public class PlayerTurnReactor : MonoBehaviour {
     public static event RetVoidArgVoid PlayerHit;
     public event RetVoidArgVoid OnMoveBackwards;
     public static event RetVoidArgInt OnMoveForward;
+    public event RetVoidArgInt OnCurrentPlayerChange;
+    public static event RetVoidArgInt OnCurrentPlayerChangeStatic;
 
     public delegate void RetVoidArgInt(int i);
     public static event RetVoidArgInt OnPlayerDiceChange;
@@ -31,15 +33,11 @@ public class PlayerTurnReactor : MonoBehaviour {
     public static MoveOneTile currentPlayer;
     public static MoveOneTile otherPlayer;
     public static int currentPlayerTurn;
+    bool initialSet = false;
 
     private void Awake()
     {
-        if (GetComponent<PlayerMoveSync>() != null)
-            playerID = GetComponent<PlayerMoveSync>().playerID;
-        else
-        {
-            DiceMechanism.OnTalismanDiceRolled += ActivateTalism;
-        }
+       
         CheckPlayerCollision.OnPlayersDidntCollide += CheckForTurn;
         CheckPlayerCollision.OnPlayersCollided += CheckForOtherHit;
         playerDice = GetComponent<PlayerDiceHolding>();
@@ -47,7 +45,29 @@ public class PlayerTurnReactor : MonoBehaviour {
         moveSync = GetComponent<PlayerMoveSync>();
         playerMoveBack = GetComponent<MoveBackwards>();
         MoveBackwards.OnGamestateChanged += CheckAfterMoveBack;
-        CheckForTurn(0);
+        if (GetComponent<PlayerMoveSync>() != null)
+            playerID = GetComponent<PlayerMoveSync>().playerID;
+        else
+        {
+            DiceMechanism.OnTalismanDiceRolled += ActivateTalism;
+            CheckForTurn(0);
+        }
+
+    }
+
+
+    private void Update()
+    {
+        if(moveSync!=null && initialSet==false)
+        {
+
+            if (OnCurrentPlayerChange == null)
+                return;
+            playerID = GetComponent<PlayerMoveSync>().playerID;
+            Debug.Log("got ID:  " + playerID);
+            CheckForTurn(1);
+            initialSet = true;
+        }
     }
     // Use this for initialization
     void CheckForTurn(int ID)
@@ -66,8 +86,8 @@ public class PlayerTurnReactor : MonoBehaviour {
             Debug.Log("check turn Deactive:  " + ID + "    " + playerID);
             if (playerDice != null)
                 playerDice.enabled = false;
-            if (moveSync != null)
-                moveSync.enabled = false;
+            //if (moveSync != null)
+                //moveSync.enabled = false;
             playermove.enabled = false;
 
             otherPlayer = playermove;
@@ -83,8 +103,10 @@ public class PlayerTurnReactor : MonoBehaviour {
             playermove.enabled = true;
             currentPlayer = playermove;
             currentPlayerTurn = playerID;
+            if (OnCurrentPlayerChange != null)
+                OnCurrentPlayerChangeStatic(currentPlayerTurn);
 
-            if (playerID == 0 && OnAIMove != null)
+            if (playerID == 0 &&moveSync==null&& OnAIMove != null)
                 StartCoroutine(EventWithDelay());
         }
 
@@ -181,6 +203,8 @@ public class PlayerTurnReactor : MonoBehaviour {
             playerMoveBack.enabled = !isMovingForward;
             currentPlayer = playermove;
             currentPlayerTurn = playerID;
+            if (OnCurrentPlayerChange != null)
+                OnCurrentPlayerChange(currentPlayerTurn);
 
         }
     }

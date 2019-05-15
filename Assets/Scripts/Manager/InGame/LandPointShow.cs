@@ -36,8 +36,9 @@ public class LandPointShow : MonoBehaviour {
         LocalPlayerEventAnnounce.OtherPlayerMoveEnded += WaitingForDiceRoll;
 
         DiceSelector.OnDiceNumbers += DisplayPointers;
+        if(PlayerTurnReactor.currentPlayer!=null)
         locationCurrentTile = PlayerTurnReactor.currentPlayer.GetComponent<MoveOneTile>().currentTileNumber.nextTile;
-        if(PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>()!=null)
+        if(PlayerTurnReactor.currentPlayer!=null &&PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>()!=null)
         DisplayPointers(diceCollection.diceFullDesigns[PlayerTurnReactor.currentPlayer.GetComponent<PlayerDiceHolding>().currentDiceID].nums);
     }
 
