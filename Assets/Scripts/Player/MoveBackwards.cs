@@ -29,8 +29,8 @@ public class MoveBackwards : MonoBehaviour {
     private void Start()
     {
         playerNum = GetComponent<MoveOneTile>().playerNum;
-        GetComponent<PlayerTurnReactor>().OnMoveBackwards += MakeMove;
-        GetComponent<PlayerEndMoveAction>().OnEndMoveDone += EndPlayerMove;
+        //GetComponent<PlayerTurnReactor>().OnMoveBackwards += MakeMove;
+        //GetComponent<PlayerEndMoveAction>().OnEndMoveDone += EndPlayerMove;
         rectTransform = GetComponent<RectTransform>();
         //   DiceMechanism.OnDiceRolled += MakeMove;
     }
@@ -44,6 +44,7 @@ public class MoveBackwards : MonoBehaviour {
 
     void MakeMove()
     {
+
         currentTileNumber = GetComponent<MoveOneTile>().currentTileNumber;
         //  OnGamestateChanged(0);
         StartCoroutine(LerpObject(5));

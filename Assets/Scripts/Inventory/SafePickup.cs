@@ -21,7 +21,7 @@ public class SafePickup : MonoBehaviour {
     [SerializeField]List< Image> currentPlayerChest;
     [SerializeField] GameObject safeChoicePanel;
    // public static int[] playersSafeType = { 0, 0 };
-    public static int[]playerSafeID ={0,0};
+    public static int[]playerSafeID ={0,0,0};
     int safeTile;
 	// Use this for initialization
 	void Start () {

@@ -39,6 +39,7 @@ public class PlayerMoveSync : NetworkBehaviour {
             isSet = true;
             GetComponent<PlayerTurnReactor>().OnCurrentPlayerChange += CheckLocalPlayerActivation;
             PlayerTurnReactor.OnCurrentPlayerChangeStatic += CheckLocalPlayerActivation;
+            if(isServer!=false)
             GetComponent<Image>().color = playerColor;
 
         }

@@ -56,7 +56,7 @@ public class MoveOneTile : MonoBehaviour {
 
     void MakeMove(int num)
     {
-        Debug.Log("start move:  " + moveSync.playerID);
+       
         if (moveSync != null)
             playerNum = moveSync.playerID;
       //  OnGamestateChanged(0);

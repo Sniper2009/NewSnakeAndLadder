@@ -131,7 +131,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9803e801aa0654d1ba14ae85de8dd783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeOfTravel: 2
+  timeOfTravel: 0.2
   currentTileNumber: {fileID: 0}
 --- !u!114 &114892509466859180
 MonoBehaviour:

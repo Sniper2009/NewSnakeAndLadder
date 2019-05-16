@@ -10,7 +10,7 @@ public class CoinCollection : MonoBehaviour {
     public delegate void RetVoidArgInt(int num);
     public static event RetVoidArgInt OnPickedUpCoin;
 
-    public static int[] playersCoin= { 0,0};
+    public static int[] playersCoin= { 0,0,0};
 	// Use this for initialization
 	void Start () {
         MoveOneTile.OnCameToTile += CheckforCoin;

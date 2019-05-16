@@ -145,9 +145,11 @@ public class PlayerTurnReactor : MonoBehaviour {
             playermove.enabled = true;
             currentPlayer = playermove;
             currentPlayerTurn = playerID;
+            if (playerID == 0 && moveSync == null && OnAIMove != null)
+                StartCoroutine(EventWithDelay());
             //if (OnPlayerDiceChange != null)
-                //OnPlayerDiceChange(DiceSelect.playerDice);
-   
+            //OnPlayerDiceChange(DiceSelect.playerDice);
+
         }
     }
 

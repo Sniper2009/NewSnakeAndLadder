@@ -436,6 +436,10 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1823637171898654, guid: b5fa6077eb37a4354a7026c72e751200, type: 2}
+      propertyPath: m_Name
+      value: InitialTile
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5fa6077eb37a4354a7026c72e751200, type: 2}
   m_IsPrefabAsset: 0
@@ -757,7 +761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9803e801aa0654d1ba14ae85de8dd783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeOfTravel: 2
+  timeOfTravel: 0.5
   currentTileNumber: {fileID: 0}
 --- !u!1 &221537424
 GameObject:
@@ -4793,7 +4797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9803e801aa0654d1ba14ae85de8dd783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeOfTravel: 2
+  timeOfTravel: 0.2
   currentTileNumber: {fileID: 0}
 --- !u!1 &1887422764
 GameObject:
