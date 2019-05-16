@@ -29,11 +29,13 @@ public class PlayerTurnReactor : MonoBehaviour {
     int currentID;
     static int talismanEffect = 0;
     static bool hitOtherEffect = false;
+    static bool isMulti = false;
    
     public static MoveOneTile currentPlayer;
     public static MoveOneTile otherPlayer;
     public static int currentPlayerTurn;
     bool initialSet = false;
+ 
 
     private void Awake()
     {
@@ -46,7 +48,10 @@ public class PlayerTurnReactor : MonoBehaviour {
         playerMoveBack = GetComponent<MoveBackwards>();
         MoveBackwards.OnGamestateChanged += CheckAfterMoveBack;
         if (GetComponent<PlayerMoveSync>() != null)
+        {
             playerID = GetComponent<PlayerMoveSync>().playerID;
+            isMulti = true;
+        }
         else
         {
             DiceMechanism.OnTalismanDiceRolled += ActivateTalism;
@@ -55,6 +60,7 @@ public class PlayerTurnReactor : MonoBehaviour {
 
     }
 
+ 
 
     private void Update()
     {
@@ -122,7 +128,7 @@ public class PlayerTurnReactor : MonoBehaviour {
 
     void CheckAfterMoveBack(int ID)
     {
-        Debug.Log("after come back");
+        Debug.Log("after come back  "+ID+"    "+playerID);
         playerMoveBack.enabled = false;
         if (ID != playerID)
         {
@@ -145,6 +151,9 @@ public class PlayerTurnReactor : MonoBehaviour {
             playermove.enabled = true;
             currentPlayer = playermove;
             currentPlayerTurn = playerID;
+            if (OnCurrentPlayerChange != null)
+                OnCurrentPlayerChangeStatic(currentPlayerTurn);
+
             if (playerID == 0 && moveSync == null && OnAIMove != null)
                 StartCoroutine(EventWithDelay());
             //if (OnPlayerDiceChange != null)

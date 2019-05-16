@@ -21,26 +21,28 @@ public class EndGamePlayerDisplay : MonoBehaviour {
 
     private void Awake()
     {
+        Debug.Log("fdddddddiiisssppplllaaayyy:  " + name);
         EndGameAnnounce.OnEndPanelActive += DisplayUIData;
     }
 
     void DisplayUIData(int winnerNum)
     {
         Debug.Log("ui:  " + playerNum);
+        playerNum = PlayerMoveSync.localPlayerID;
         if (CoinCollection.playersCoin[playerNum] > 0)
         {
             coinAmount.enabled = true;
             coinImage.enabled = true;
             coinAmount.text = CoinCollection.playersCoin[playerNum].ToString();
-            PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin") + CoinCollection.playersCoin[0]);
+            PlayerPrefs.SetInt("Coin", PlayerPrefs.GetInt("Coin") + CoinCollection.playersCoin[playerNum]);
         }
         if (playerNum != winnerNum)
             return;
-        if (SafePickup.playerSafeID[0] > 0)
+        if (SafePickup.playerSafeID[playerNum] > 0)
         {
             safeImage.enabled = true;
 
-            safeImage.sprite = chestCollection.chestCollection[SafePickup.playerSafeID[0]].chestImage;
+            safeImage.sprite = chestCollection.chestCollection[SafePickup.playerSafeID[playerNum]].chestImage;
             if (chestSaver.ReturnChestNum() >= 4)
             {
                 safeImage.color = Color.gray;
@@ -49,7 +51,7 @@ public class EndGamePlayerDisplay : MonoBehaviour {
             }
         }
       
-        ChestData cData = chestCollection.chestCollection[SafePickup.playerSafeID[0]];
+        ChestData cData = chestCollection.chestCollection[SafePickup.playerSafeID[playerNum]];
         SaveableChest newChest = new SaveableChest(cData.chestID, ChestState.Closed, System.DateTime.Now, cData.openDuration,cData.chestType);
         if(playerNum==winnerNum && playerNum>0 && cData.chestID>0)
         OnAddChest(newChest);

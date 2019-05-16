@@ -18,6 +18,7 @@ public class PlayerMoveSync : NetworkBehaviour {
 
     bool isSet = false;
     [SyncVar]public int playerID=0;
+    public static int localPlayerID;
 
     [SyncVar] 
     Color playerColor;
@@ -39,8 +40,8 @@ public class PlayerMoveSync : NetworkBehaviour {
             isSet = true;
             GetComponent<PlayerTurnReactor>().OnCurrentPlayerChange += CheckLocalPlayerActivation;
             PlayerTurnReactor.OnCurrentPlayerChangeStatic += CheckLocalPlayerActivation;
-            if(isServer!=false)
-            GetComponent<Image>().color = playerColor;
+            if(isServer==false)
+            GetComponent<Image>().color = Color.white;
 
         }
     }
@@ -52,6 +53,7 @@ public class PlayerMoveSync : NetworkBehaviour {
         {
                     CmdSetID(2);
                     playerID = 2;
+            localPlayerID = 2;
                     CmdSetPlayerColor();
             GetComponent<Image>().color = Color.white;
                    GetComponent< PlayerTurnReactor>().OnCurrentPlayerChange += CheckLocalPlayerActivation;
@@ -61,6 +63,7 @@ public class PlayerMoveSync : NetworkBehaviour {
         {
             CmdSetID(1);
             playerID = 1;
+            localPlayerID = 1;
             GetComponent<PlayerTurnReactor>().OnCurrentPlayerChange += CheckLocalPlayerActivation;
             PlayerTurnReactor.OnCurrentPlayerChangeStatic += CheckLocalPlayerActivation;
         }
