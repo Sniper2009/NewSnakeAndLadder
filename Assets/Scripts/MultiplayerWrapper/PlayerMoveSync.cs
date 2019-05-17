@@ -10,7 +10,9 @@ public class PlayerMoveSync : NetworkBehaviour {
     public delegate void RetVoidArgInt (int num);
 
     public event RetVoidArgInt OnDiceRolled;
-    public event RetVoidArgInt OnTalismanDiceRolled;
+
+    public delegate void RetVoidArg2Int(int i1, int i2);
+    public static event RetVoidArg2Int OnTalismanDiceRolled;
 
     public delegate void RetVoidArgVoid();
     public static event RetVoidArgVoid OnActivateDice;
@@ -107,7 +109,8 @@ public class PlayerMoveSync : NetworkBehaviour {
 
     void SendTalismanDice(int diceNum,int currentPlayer)
     {
-
+        if(isLocalPlayer)
+        CmdSendTalismanDice(diceNum,PlayerTurnReactor.currentPlayerTurn);
     }
 
     void SendDiceRoll(int diceNum)
@@ -127,18 +130,24 @@ public class PlayerMoveSync : NetworkBehaviour {
 
     [Command]
 
-    void CmdSendTalismanDice(int diceNum)
+    void CmdSendTalismanDice(int diceNum, int currentPlayer)
     {
-
+        RpcSendTalisman(diceNum, currentPlayer);//the local player for talisman is disconnected in multiplayer
     }
 
+    [ClientRpc]
+    void RpcSendTalisman(int diceNum, int currentPlayer)
+    {
+     
+        OnTalismanDiceRolled(diceNum, currentPlayer);
+    }
 
     [ClientRpc]
     void RpcGetDiceRoll(int diceNum)
     {
         if (isLocalPlayer)
             return;
-        OnDiceRolled(diceNum);
+        OnDiceRolled(diceNum);//the local player is directly connected to dice event
     }
 
 

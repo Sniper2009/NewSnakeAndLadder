@@ -15,7 +15,8 @@ public class LocalPlayerEventAnnounce : MonoBehaviour {
     [SerializeField] int playerNum;
 	void RespondToPlayerMoveEnd(int player)
     {
-        if(playerNum!=player)
+        Debug.Log("Other move ended: " + player + "   " + playerNum);
+        if(playerNum!=player && PlayerTurnReactor.hitOtherEffect==false && PlayerTurnReactor.talismanEffect==0)
         {
             OtherPlayerMoveEnded();
         }

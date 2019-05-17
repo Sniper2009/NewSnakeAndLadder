@@ -27,8 +27,8 @@ public class PlayerTurnReactor : MonoBehaviour {
     [SerializeField] int playerID;
 
     int currentID;
-    static int talismanEffect = 0;
-    static bool hitOtherEffect = false;
+    public static int talismanEffect = 0;
+    public static bool hitOtherEffect = false;
     static bool isMulti = false;
    
     public static MoveOneTile currentPlayer;
@@ -50,6 +50,7 @@ public class PlayerTurnReactor : MonoBehaviour {
         if (GetComponent<PlayerMoveSync>() != null)
         {
             playerID = GetComponent<PlayerMoveSync>().playerID;
+            PlayerMoveSync.OnTalismanDiceRolled += ActivateTalism;
             isMulti = true;
         }
         else
@@ -215,7 +216,11 @@ public class PlayerTurnReactor : MonoBehaviour {
             currentPlayer = playermove;
             currentPlayerTurn = playerID;
             if (OnCurrentPlayerChange != null)
-                OnCurrentPlayerChange(currentPlayerTurn);
+            {
+                Debug.Log("state isnt active");
+                OnCurrentPlayerChangeStatic(currentPlayerTurn);
+
+            }
 
         }
     }
@@ -233,7 +238,8 @@ public class PlayerTurnReactor : MonoBehaviour {
     {
         if (GetComponent<PlayerMoveSync>() != null)
         {
-           //register for events
+            PlayerMoveSync.OnTalismanDiceRolled -= ActivateTalism;
+    
         }
         else
         {
